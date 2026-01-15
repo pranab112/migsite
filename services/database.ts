@@ -58,7 +58,14 @@ export const calculateSmartPrice = (user: UserProfile | null, basePrice: string,
   return { finalPrice, discount: Math.round(discount * 100), reason, originalPrice: numericPrice };
 };
 
-// --- LOCAL STORAGE DATABASE IMPLEMENTATION ---
+// --- MOCK DATA SEED ---
+const MOCK_USERS: UserProfile[] = [
+    { name: 'Alice Chen', email: 'alice@techcorp.com', role: 'BUSINESS', organization: 'TechCorp Solutions' },
+    { name: 'Bob Smith', email: 'bob.s@university.edu', role: 'STUDENT', organization: 'MIT' },
+    { name: 'Charlie Davis', email: 'charlie@startup.io', role: 'BUSINESS', organization: 'RapidLaunch IO' },
+    { name: 'Dana Lee', email: 'dana@freelance.net', role: 'STUDENT', organization: 'Self-Taught' },
+    { name: 'Eve Solver', email: 'eve@mindisgear.com', role: 'ADMIN', organization: 'Mind is Gear' }
+];
 
 const KEYS = {
   USERS: 'mig_users',
@@ -75,8 +82,62 @@ const notifyAuth = (user: UserProfile | null) => authListeners.forEach(cb => cb(
 export const db = {
   system: {
     checkHealth: async () => {
-        // LocalStorage is always available in the browser
-        return { status: 'OK', message: 'Local System Ready' };
+        // LocalStorage check
+        try {
+            const usage = JSON.stringify(localStorage).length;
+            const status = usage < 4500000 ? 'OK' : 'WARNING'; // 5MB limit approx
+            return { status, message: `System Online`, usageBytes: usage };
+        } catch(e) {
+            return { status: 'ERROR', message: 'Storage Error', usageBytes: 0 };
+        }
+    },
+    getStorageUsage: async () => {
+        let total = 0;
+        for (const key in localStorage) {
+            if (localStorage.hasOwnProperty(key)) {
+                total += (localStorage[key].length * 2); // approx bytes
+            }
+        }
+        return {
+            totalKB: (total / 1024).toFixed(2),
+            usagePercent: (total / (5 * 1024 * 1024) * 100).toFixed(2) // Assuming 5MB limit
+        };
+    },
+    seedDatabase: async () => {
+        // Only seed if empty to avoid overwriting real data
+        const currentUsers = JSON.parse(localStorage.getItem(KEYS.USERS) || '[]');
+        if (currentUsers.length <= 1) { // 1 might be just the admin
+            // Add mock users (with fake passwords)
+            const seededUsers = [...currentUsers];
+            MOCK_USERS.forEach(u => {
+                if (!seededUsers.find((ex: any) => ex.email === u.email)) {
+                    seededUsers.push({ ...u, password: 'password123' });
+                }
+            });
+            localStorage.setItem(KEYS.USERS, JSON.stringify(seededUsers));
+
+            // Add mock bookings
+            const bookings = [];
+            const classes = AVAILABLE_CLASSES;
+            for(let i=0; i<15; i++) {
+                const randomUser = seededUsers[Math.floor(Math.random() * seededUsers.length)];
+                const randomClass = classes[Math.floor(Math.random() * classes.length)];
+                bookings.push({
+                    id: crypto.randomUUID(),
+                    user_id: randomUser.email,
+                    class_id: randomClass.id,
+                    created_at: new Date(Date.now() - Math.floor(Math.random() * 1000000000)).toISOString()
+                });
+            }
+            localStorage.setItem(KEYS.BOOKINGS, JSON.stringify(bookings));
+            return { success: true, message: `Database seeded with ${seededUsers.length} users and ${bookings.length} transactions.` };
+        }
+        return { success: false, message: 'Database already contains data. Seed skipped.' };
+    },
+    nuke: async () => {
+        localStorage.clear();
+        notifyAuth(null);
+        return { success: true, message: 'System Factory Reset Complete.' };
     }
   },
 
@@ -90,6 +151,18 @@ export const db = {
         organization: u.organization
       }));
     },
+    deleteUser: async (email: string) => {
+        const users = JSON.parse(localStorage.getItem(KEYS.USERS) || '[]');
+        const newUsers = users.filter((u: any) => u.email !== email);
+        localStorage.setItem(KEYS.USERS, JSON.stringify(newUsers));
+        
+        // Cleanup bookings
+        const bookings = JSON.parse(localStorage.getItem(KEYS.BOOKINGS) || '[]');
+        const newBookings = bookings.filter((b: any) => b.user_id !== email);
+        localStorage.setItem(KEYS.BOOKINGS, JSON.stringify(newBookings));
+        
+        return true;
+    },
     getAllBookings: async () => {
       const bookings = JSON.parse(localStorage.getItem(KEYS.BOOKINGS) || '[]');
       const users = JSON.parse(localStorage.getItem(KEYS.USERS) || '[]');
@@ -98,13 +171,20 @@ export const db = {
         const user = users.find((u: any) => u.email === b.user_id);
         const course = AVAILABLE_CLASSES.find(c => c.id === b.class_id);
         return {
-          userName: user?.name || 'Unknown',
+          id: b.id,
+          userName: user?.name || 'Unknown User',
           userEmail: b.user_id,
-          className: course?.title || b.class_id,
+          className: course?.title || 'Legacy Course',
           price: course?.price || 'NPR 0',
           date: b.created_at
         };
-      });
+      }).sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    },
+    deleteBooking: async (id: string) => {
+        const bookings = JSON.parse(localStorage.getItem(KEYS.BOOKINGS) || '[]');
+        const newBookings = bookings.filter((b: any) => b.id !== id);
+        localStorage.setItem(KEYS.BOOKINGS, JSON.stringify(newBookings));
+        return true;
     }
   },
 
@@ -127,7 +207,7 @@ export const db = {
       return { user, confirmationRequired: false };
     },
     signIn: async (email: string, password: string): Promise<UserProfile> => {
-      // Hardcoded Admin
+      // Hardcoded Admin for easy access
       if (email === 'admin@mindisgear.com' && password === 'admin123') {
          const admin = { name: 'System Administrator', email, role: 'ADMIN', organization: 'Internal' } as UserProfile;
          localStorage.setItem(KEYS.SESSION, JSON.stringify(admin));
