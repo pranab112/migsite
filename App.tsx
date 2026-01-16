@@ -45,36 +45,6 @@ const FEATURED_PROJECTS = [
   }
 ];
 
-const TEAM_MEMBERS = [
-  {
-    id: 'team_1',
-    name: 'Dr. Elena Rostova',
-    role: 'Founder & Chief Architect',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop',
-    bio: 'Former lead researcher at DeepMind. Pioneered the "Neuro-Symbolic Bridge" architecture that powers our core engine.'
-  },
-  {
-    id: 'team_2',
-    name: 'James Chen',
-    role: 'Head of Engineering',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=800&auto=format&fit=crop',
-    bio: 'Full-stack veteran with 15 years experience building high-frequency trading systems and scalable cloud infrastructure.'
-  },
-  {
-    id: 'team_3',
-    name: 'Sarah Oconnell',
-    role: 'Lead Data Scientist',
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=800&auto=format&fit=crop',
-    bio: 'Specialist in NLP and Transformer models. PhD from MIT in Computational Linguistics. Leads our generative AI division.'
-  },
-  {
-    id: 'team_4',
-    name: 'David Okafor',
-    role: 'Product Strategy',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop',
-    bio: 'Ensuring our AI solutions translate to real-world business value. Expert in agile methodologies and product lifecycle.'
-  }
-];
 
 const ProjectsSection = () => (
   <section className="py-24 bg-slate-900/30 border-y border-slate-800 animate-fade-in">
@@ -128,55 +98,120 @@ const ProjectsSection = () => (
   </section>
 );
 
-const TeamSection = () => (
-  <section className="py-24 bg-slate-950 relative overflow-hidden border-t border-slate-900 animate-fade-in">
-     <div className="absolute top-0 right-0 w-96 h-96 bg-brand-900/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-     <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-900/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  image: string;
+  bio: string;
+  linkedin_url?: string;
+  twitter_url?: string;
+}
 
-     <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="text-center mb-20">
-           <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-2 block">The Architects</span>
-           <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-6">Meet Our Team</h2>
-           <p className="text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed">
-              We are a collective of researchers, engineers, and strategists dedicated to bridging the gap between biological intelligence and synthetic cognition.
-           </p>
-        </div>
+const TeamSection = () => {
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [loading, setLoading] = useState(true);
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-           {TEAM_MEMBERS.map(member => (
-              <div key={member.id} className="group relative">
-                 <div className="relative overflow-hidden rounded-2xl bg-slate-900 border border-slate-800 transition-all duration-500 hover:border-brand-500/50 hover:-translate-y-2 h-full flex flex-col">
-                    <div className="aspect-[4/5] overflow-hidden relative">
-                       <img 
-                         src={member.image} 
-                         alt={member.name} 
-                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0" 
-                       />
-                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-90"></div>
-                       
-                       <div className="absolute bottom-0 left-0 right-0 p-6">
-                           <h3 className="text-xl font-bold text-white mb-1">{member.name}</h3>
-                           <p className="text-brand-400 text-xs font-bold uppercase tracking-wider">{member.role}</p>
-                       </div>
-                    </div>
-                    
-                    <div className="p-6 pt-0 flex-grow bg-slate-900">
-                        <div className="h-px w-full bg-slate-800 mb-4"></div>
-                        <p className="text-slate-400 text-sm leading-relaxed">
-                             {member.bio}
-                        </p>
-                        <div className="mt-4 flex gap-3 opacity-50 group-hover:opacity-100 transition-opacity">
-                            <Linkedin className="w-4 h-4 text-slate-400 hover:text-white cursor-pointer" />
-                            <Twitter className="w-4 h-4 text-slate-400 hover:text-white cursor-pointer" />
-                        </div>
-                    </div>
-                 </div>
-              </div>
-           ))}
+  useEffect(() => {
+    const fetchTeam = async () => {
+      try {
+        const API_BASE = window.location.hostname === 'localhost'
+          ? 'http://localhost:3001'
+          : '';
+        const response = await fetch(`${API_BASE}/api/team`);
+        if (response.ok) {
+          const data = await response.json();
+          setTeamMembers(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch team:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTeam();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-24 bg-slate-950 relative overflow-hidden border-t border-slate-900">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <div className="animate-pulse">
+            <div className="h-8 w-48 bg-slate-800 rounded mx-auto mb-4"></div>
+            <div className="h-12 w-96 bg-slate-800 rounded mx-auto mb-6"></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-20">
+              {[1,2,3,4].map(i => (
+                <div key={i} className="bg-slate-900 rounded-2xl h-96"></div>
+              ))}
+            </div>
+          </div>
         </div>
-     </div>
-  </section>
-);
+      </section>
+    );
+  }
+
+  if (teamMembers.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="py-24 bg-slate-950 relative overflow-hidden border-t border-slate-900 animate-fade-in">
+       <div className="absolute top-0 right-0 w-96 h-96 bg-brand-900/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+       <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-900/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+
+       <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="text-center mb-20">
+             <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-2 block">The Architects</span>
+             <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-6">Meet Our Team</h2>
+             <p className="text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed">
+                We are a collective of researchers, engineers, and strategists dedicated to bridging the gap between biological intelligence and synthetic cognition.
+             </p>
+          </div>
+
+          <div className={`grid grid-cols-1 md:grid-cols-2 ${teamMembers.length >= 3 ? 'lg:grid-cols-3' : ''} ${teamMembers.length >= 4 ? 'lg:grid-cols-4' : ''} gap-8 justify-center`}>
+             {teamMembers.map(member => (
+                <div key={member.id} className="group relative">
+                   <div className="relative overflow-hidden rounded-2xl bg-slate-900 border border-slate-800 transition-all duration-500 hover:border-brand-500/50 hover:-translate-y-2 h-full flex flex-col">
+                      <div className="aspect-[4/5] overflow-hidden relative">
+                         <img
+                           src={member.image}
+                           alt={member.name}
+                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
+                         />
+                         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-90"></div>
+
+                         <div className="absolute bottom-0 left-0 right-0 p-6">
+                             <h3 className="text-xl font-bold text-white mb-1">{member.name}</h3>
+                             <p className="text-brand-400 text-xs font-bold uppercase tracking-wider">{member.role}</p>
+                         </div>
+                      </div>
+
+                      <div className="p-6 pt-0 flex-grow bg-slate-900">
+                          <div className="h-px w-full bg-slate-800 mb-4"></div>
+                          <p className="text-slate-400 text-sm leading-relaxed">
+                               {member.bio}
+                          </p>
+                          <div className="mt-4 flex gap-3 opacity-50 group-hover:opacity-100 transition-opacity">
+                              {member.linkedin_url && (
+                                <a href={member.linkedin_url} target="_blank" rel="noopener noreferrer">
+                                  <Linkedin className="w-4 h-4 text-slate-400 hover:text-white cursor-pointer" />
+                                </a>
+                              )}
+                              {member.twitter_url && (
+                                <a href={member.twitter_url} target="_blank" rel="noopener noreferrer">
+                                  <Twitter className="w-4 h-4 text-slate-400 hover:text-white cursor-pointer" />
+                                </a>
+                              )}
+                          </div>
+                      </div>
+                   </div>
+                </div>
+             ))}
+          </div>
+       </div>
+    </section>
+  );
+};
 
 const AcademySection = ({ onRegister }: { onRegister: (title: string, price: number, id: string) => void }) => (
   <section className="py-24 bg-slate-900/50 border-t border-slate-800 relative animate-fade-in">
@@ -649,96 +684,369 @@ const App: React.FC = () => {
 
   const Landing = () => (
     <div className="flex flex-col">
-      {/* Revised Hero / Mission */}
-      <section className="relative overflow-hidden py-32 text-center bg-slate-950">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-900/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="relative z-10 max-w-4xl mx-auto px-6">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-950/30 border border-red-500/30 mb-8 animate-fade-in">
-             <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
-             <span className="text-xs text-red-400 font-bold uppercase tracking-widest">Time Critical: Motivation Fades</span>
+      {/* HERO SECTION - "Ideas Fade Away" Concept */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950">
+        {/* Animated Background */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-1/4 w-[800px] h-[800px] bg-brand-500/8 rounded-full blur-[150px] animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-indigo-500/5 rounded-full blur-[100px]"></div>
+        </div>
+
+        <div className="relative z-10 max-w-6xl mx-auto px-6 py-20 text-center">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 mb-8 animate-fade-in">
+            <Hourglass className="w-4 h-4 text-amber-400" />
+            <span className="text-sm text-amber-300 font-medium">Rapid Execution Partner</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-display font-bold text-white mb-8 tracking-tight leading-tight animate-slide-up">
-            Ideas Decay in <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-500">10 Days</span>
+
+          {/* Main Headline - The Fade Effect */}
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6 tracking-tight leading-[1.1]">
+            <span className="block text-white/40 animate-pulse" style={{ animationDuration: '3s' }}>Ideas Fade Away</span>
           </h1>
-          <p className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed font-light">
-            You have a spark. If you don't build it now, you'll lose the drive. We turn your mental concept into a deployed system before the motivation fades.
+
+          {/* The Promise - Solid & Bold */}
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-8 tracking-tight animate-slide-up">
+            Before fading, we make your
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-amber-400 to-brand-400">system ready.</span>
+          </h2>
+
+          {/* Supporting Text */}
+          <p className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto mb-12 leading-relaxed">
+            From concept to production in <span className="text-amber-400 font-bold">10 days</span>. We capture your vision and build it into reality before the moment passes.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <button onClick={() => handleNavigate(AppView.EDUCATION)} className="bg-brand-600 hover:bg-brand-500 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-lg shadow-brand-900/30 flex items-center justify-center">
-               Start Learning <ArrowRight className="w-5 h-5 ml-2" />
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16 animate-fade-in">
+            <button
+              onClick={() => handleNavigate(AppView.CONTACT)}
+              className="group bg-gradient-to-r from-amber-500 to-brand-500 hover:from-amber-400 hover:to-brand-400 text-slate-900 px-8 py-4 rounded-xl font-bold transition-all shadow-2xl shadow-amber-500/20 flex items-center justify-center"
+            >
+              <Zap className="w-5 h-5 mr-2" />
+              Save Your Idea
+              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </button>
-            <button onClick={() => handleNavigate(AppView.CONTACT)} className="bg-slate-900 hover:bg-slate-800 text-white px-8 py-4 rounded-xl font-bold transition-all border border-slate-800 flex items-center justify-center">
-               Deploy System
+            <button
+              onClick={() => document.getElementById('sprint-timeline')?.scrollIntoView({ behavior: 'smooth' })}
+              className="bg-slate-900 hover:bg-slate-800 text-white px-8 py-4 rounded-xl font-bold transition-all border border-slate-700 flex items-center justify-center"
+            >
+              <Timer className="w-5 h-5 mr-2" />
+              See Our Speed
             </button>
+          </div>
+
+          {/* Speed Stats */}
+          <div className="flex flex-wrap justify-center items-center gap-6 md:gap-12 text-slate-400">
+            <div className="flex items-center gap-2 bg-slate-900/50 px-4 py-2 rounded-full border border-slate-800">
+              <Rocket className="w-4 h-4 text-amber-500" />
+              <span className="font-bold text-white">10-Day</span>
+              <span className="text-sm">MVP</span>
+            </div>
+            <div className="flex items-center gap-2 bg-slate-900/50 px-4 py-2 rounded-full border border-slate-800">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+              <span className="font-bold text-white">50+</span>
+              <span className="text-sm">Ideas Launched</span>
+            </div>
+            <div className="flex items-center gap-2 bg-slate-900/50 px-4 py-2 rounded-full border border-slate-800">
+              <Clock className="w-4 h-4 text-brand-500" />
+              <span className="font-bold text-white">99%</span>
+              <span className="text-sm">On-Time</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+          <ChevronRight className="w-6 h-6 text-slate-600 rotate-90" />
+        </div>
+      </section>
+
+      {/* THE FADE PROBLEM SECTION */}
+      <section className="py-24 bg-slate-900 border-y border-slate-800 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 via-transparent to-amber-500/5"></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="text-center mb-16">
+            <span className="text-red-400 font-bold tracking-widest text-sm uppercase mb-4 block">The Problem</span>
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">While You Wait, Your Idea Loses...</h2>
+            <p className="text-slate-400 max-w-2xl mx-auto text-lg">
+              Every day of delay costs you more than you realize
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { icon: Timer, title: 'Market Timing', desc: 'Competitors are already building. First-mover advantage slips away.', color: 'red' },
+              { icon: TrendingUp, title: 'Momentum', desc: 'Energy and enthusiasm diminish with each passing week.', color: 'orange' },
+              { icon: Target, title: 'Opportunity', desc: 'Investors and partners move to the next pitch in line.', color: 'amber' },
+              { icon: Users, title: 'Team Alignment', desc: 'Stakeholder confidence fades without visible progress.', color: 'yellow' },
+            ].map((item, i) => (
+              <div key={i} className="bg-slate-950/50 border border-slate-800 p-6 rounded-2xl hover:border-red-500/30 transition-all group">
+                <div className={`w-12 h-12 rounded-xl bg-${item.color}-500/10 flex items-center justify-center mb-4 group-hover:bg-${item.color}-500/20 transition-all`}>
+                  <item.icon className={`w-6 h-6 text-${item.color}-400`} />
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* The 3 Pillars Section - "What We Do" */}
-      <section className="py-24 bg-slate-900/50 relative border-y border-slate-800">
-        <div className="max-w-7xl mx-auto px-6">
-           <div className="text-center mb-16">
-              <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-2 block">Our Core Pillars</span>
-              <h2 className="text-3xl md:text-5xl font-display font-bold text-white">What We Do</h2>
-           </div>
+      {/* OUR PROMISE / SOLUTION SECTION */}
+      <section className="py-24 bg-slate-950 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-500/50 to-transparent"></div>
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-brand-500/5 rounded-full blur-[100px]"></div>
 
-           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Pillar 1: Neural Systems */}
-              <div className="bg-slate-950 border border-slate-800 p-8 rounded-3xl relative group hover:border-brand-500/50 transition-all">
-                  <div className="w-16 h-16 bg-brand-500/10 rounded-2xl flex items-center justify-center mb-8 border border-slate-800 group-hover:border-brand-500/30 group-hover:bg-brand-900/20 transition-all">
-                      <Cpu className="w-8 h-8 text-brand-400" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-4">Neural Systems</h3>
-                  <p className="text-slate-400 leading-relaxed mb-6">
-                      We engineer autonomous software architectures that learn and adapt. From predictive logistics to generative content pipelines, we build the brains behind the business.
-                  </p>
-                  <ul className="space-y-3">
-                      <li className="flex items-center text-slate-500 text-sm"><CheckCircle2 className="w-4 h-4 text-brand-500 mr-2"/> Custom LLM Integration</li>
-                      <li className="flex items-center text-slate-500 text-sm"><CheckCircle2 className="w-4 h-4 text-brand-500 mr-2"/> Autonomous Agents</li>
-                  </ul>
-              </div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-4 block">Our Promise</span>
+              <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">
+                We Don't Let Ideas Die
+              </h2>
+              <p className="text-xl text-slate-400 mb-8 leading-relaxed">
+                In the time others spend <span className="text-slate-300">planning meetings</span>, we're already <span className="text-brand-400 font-semibold">building your product</span>. Our rapid deployment methodology means your idea becomes reality in days, not months.
+              </p>
 
-              {/* Pillar 2: Cognitive Upskilling */}
-              <div className="bg-slate-950 border border-slate-800 p-8 rounded-3xl relative group hover:border-indigo-500/50 transition-all">
-                  <div className="w-16 h-16 bg-indigo-500/10 rounded-2xl flex items-center justify-center mb-8 border border-slate-800 group-hover:border-indigo-500/30 group-hover:bg-indigo-900/20 transition-all">
-                      <Brain className="w-8 h-8 text-indigo-400" />
+              <div className="space-y-4">
+                <div className="flex items-center gap-4 p-4 bg-slate-900 rounded-xl border border-slate-800">
+                  <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+                    <Zap className="w-5 h-5 text-emerald-400" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-4">Cognitive Upskilling</h3>
-                  <p className="text-slate-400 leading-relaxed mb-6">
-                      Through <strong>Skill Forge</strong> and our Academy, we provide verified certification paths. We don't just teach tools; we train the workforce to think alongside AI.
-                  </p>
-                  <ul className="space-y-3">
-                      <li className="flex items-center text-slate-500 text-sm"><CheckCircle2 className="w-4 h-4 text-indigo-500 mr-2"/> Interactive Roadmaps</li>
-                      <li className="flex items-center text-slate-500 text-sm"><CheckCircle2 className="w-4 h-4 text-indigo-500 mr-2"/> Professional Certification</li>
-                  </ul>
+                  <div>
+                    <div className="font-bold text-white">Speed Without Compromise</div>
+                    <div className="text-sm text-slate-400">Fast execution doesn't mean cutting corners</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4 p-4 bg-slate-900 rounded-xl border border-slate-800">
+                  <div className="w-10 h-10 rounded-lg bg-brand-500/10 flex items-center justify-center flex-shrink-0">
+                    <Shield className="w-5 h-5 text-brand-400" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-white">Production-Ready Code</div>
+                    <div className="text-sm text-slate-400">Scalable architecture from day one</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4 p-4 bg-slate-900 rounded-xl border border-slate-800">
+                  <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center flex-shrink-0">
+                    <Activity className="w-5 h-5 text-amber-400" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-white">Daily Progress Updates</div>
+                    <div className="text-sm text-slate-400">Watch your idea come to life in real-time</div>
+                  </div>
+                </div>
               </div>
+            </div>
 
-              {/* Pillar 3: The 7-Day Sprint */}
-              <div className="bg-slate-950 border border-slate-800 p-8 rounded-3xl relative group hover:border-orange-500/50 transition-all">
-                  <div className="w-16 h-16 bg-orange-500/10 rounded-2xl flex items-center justify-center mb-8 border border-slate-800 group-hover:border-orange-500/30 group-hover:bg-orange-900/20 transition-all">
-                      <Timer className="w-8 h-8 text-orange-400" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-4">The 7-Day Sprint</h3>
-                  <p className="text-slate-400 leading-relaxed mb-6">
-                      Beat the 10-day motivation drop-off. We take your raw idea and deploy a functional MVP in <strong>7 days</strong>, locking in your progress before your mind moves on.
-                  </p>
-                  <ul className="space-y-3">
-                      <li className="flex items-center text-slate-500 text-sm"><CheckCircle2 className="w-4 h-4 text-orange-500 mr-2"/> MVP Before Decay</li>
-                      <li className="flex items-center text-slate-500 text-sm"><CheckCircle2 className="w-4 h-4 text-orange-500 mr-2"/> Capture Momentum</li>
-                  </ul>
+            {/* Visual Element - Timeline Preview */}
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-500/20 to-amber-500/20 rounded-3xl blur-xl"></div>
+              <div className="relative bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl">
+                <div className="flex items-center gap-3 mb-6">
+                  <Hourglass className="w-6 h-6 text-amber-400" />
+                  <span className="text-lg font-bold text-white">10-Day Sprint Timeline</span>
+                </div>
+
+                <div className="space-y-4">
+                  {[
+                    { days: 'Day 1-2', phase: 'CAPTURE', desc: 'Deep dive into your vision', color: 'brand', progress: 100 },
+                    { days: 'Day 3-6', phase: 'BUILD', desc: 'Core development sprint', color: 'indigo', progress: 100 },
+                    { days: 'Day 7-9', phase: 'REFINE', desc: 'Polish and iterate', color: 'purple', progress: 100 },
+                    { days: 'Day 10', phase: 'LAUNCH', desc: 'Deploy to production', color: 'amber', progress: 100 },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-4">
+                      <div className="w-20 text-xs font-mono text-slate-500">{item.days}</div>
+                      <div className="flex-grow">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className={`text-sm font-bold text-${item.color}-400`}>{item.phase}</span>
+                          <span className="text-xs text-slate-500">{item.desc}</span>
+                        </div>
+                        <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+                          <div className={`h-full bg-gradient-to-r from-${item.color}-500 to-${item.color}-400 rounded-full`} style={{ width: `${item.progress}%` }}></div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 pt-6 border-t border-slate-800 flex items-center justify-between">
+                  <span className="text-slate-400 text-sm">Total Time</span>
+                  <span className="text-2xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-amber-400">10 Days</span>
+                </div>
               </div>
-           </div>
+            </div>
+          </div>
         </div>
       </section>
-      
+
+      {/* 10-DAY SPRINT TIMELINE */}
+      <section id="sprint-timeline" className="py-24 bg-slate-900/50 border-y border-slate-800">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <span className="text-amber-400 font-bold tracking-widest text-sm uppercase mb-4 block">How We Beat The Fade</span>
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">The 10-Day Sprint</h2>
+            <p className="text-slate-400 max-w-2xl mx-auto text-lg">
+              A battle-tested process that turns ideas into production systems
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {[
+              { step: 'Days 1-2', title: 'Capture', desc: 'We understand your vision, define scope, and design the architecture', icon: Brain, color: 'brand' },
+              { step: 'Days 3-6', title: 'Build', desc: 'Rapid development with daily demos and real-time collaboration', icon: Code, color: 'indigo' },
+              { step: 'Days 7-9', title: 'Refine', desc: 'Polish UI/UX, optimize performance, and iterate on feedback', icon: Sparkles, color: 'purple' },
+              { step: 'Day 10', title: 'Launch', desc: 'Deploy to production, monitor, and hand over with full documentation', icon: Rocket, color: 'amber' },
+            ].map((item, i) => (
+              <div key={i} className="relative group">
+                <div className={`bg-slate-900 border border-slate-800 p-8 rounded-3xl hover:border-${item.color}-500/50 transition-all h-full`}>
+                  <div className={`w-14 h-14 rounded-2xl bg-${item.color}-500/10 flex items-center justify-center mb-6 group-hover:bg-${item.color}-500/20 transition-all`}>
+                    <item.icon className={`w-7 h-7 text-${item.color}-400`} />
+                  </div>
+                  <div className={`text-${item.color}-400 font-mono text-sm mb-2`}>{item.step}</div>
+                  <h3 className="text-2xl font-bold text-white mb-3">{item.title}</h3>
+                  <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+                </div>
+                {i < 3 && (
+                  <div className="hidden md:block absolute top-1/2 -right-3 w-6 h-px bg-gradient-to-r from-slate-700 to-transparent z-10"></div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SERVICES - Speed Focused */}
+      <section className="py-24 bg-slate-950 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-500/5 rounded-full blur-[100px]"></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="text-center mb-16">
+            <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-4 block">What We Build Fast</span>
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">Services</h2>
+            <p className="text-slate-400 max-w-2xl mx-auto text-lg">
+              Every service optimized for speed without sacrificing quality
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Service Cards with Delivery Time */}
+            {[
+              { icon: Cpu, title: 'AI Solutions', desc: 'Custom AI/ML, LLM integration, chatbots, and automation', time: '10-14 days', color: 'brand' },
+              { icon: Code, title: 'Web Applications', desc: 'Full-stack apps, SaaS platforms, and enterprise software', time: '10-21 days', color: 'indigo' },
+              { icon: Rocket, title: 'MVP Development', desc: 'Validate your idea with a production-ready prototype', time: '10 days', color: 'amber' },
+              { icon: GraduationCap, title: 'Team Training', desc: 'AI and development training with certification', time: '1-4 weeks', color: 'emerald' },
+              { icon: Server, title: 'Cloud & DevOps', desc: 'Infrastructure setup, CI/CD, and deployment automation', time: '3-7 days', color: 'purple' },
+              { icon: BarChart, title: 'Tech Consulting', desc: 'Strategy, architecture review, and AI readiness audit', time: '2-5 days', color: 'pink' },
+            ].map((service, i) => (
+              <div key={i} className={`group bg-gradient-to-br from-slate-900 to-slate-900/50 border border-slate-800 p-8 rounded-3xl hover:border-${service.color}-500/50 transition-all duration-300 hover:-translate-y-2`}>
+                <div className="flex items-start justify-between mb-6">
+                  <div className={`w-14 h-14 bg-${service.color}-500/10 rounded-2xl flex items-center justify-center group-hover:bg-${service.color}-500/20 transition-all`}>
+                    <service.icon className={`w-7 h-7 text-${service.color}-400`} />
+                  </div>
+                  <div className={`px-3 py-1 rounded-full bg-${service.color}-500/10 border border-${service.color}-500/20`}>
+                    <span className={`text-xs font-bold text-${service.color}-400`}>{service.time}</span>
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3">{service.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{service.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Portfolio / Projects Section */}
       <ProjectsSection />
 
       {/* Team Section */}
       <TeamSection />
 
+      {/* TESTIMONIALS - Speed Focused */}
+      <section className="py-24 bg-slate-950 relative overflow-hidden">
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-500/5 rounded-full blur-[100px]"></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="text-center mb-16">
+            <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-4 block">Ideas We've Saved</span>
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">Client Success Stories</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { name: 'Sarah Chen', role: 'CTO, TechFlow Inc', text: 'We had an idea that needed to launch before a competitor. Mind is Gear delivered our MVP in just 8 days. We beat them to market.', days: '8 days' },
+              { name: 'Michael Roberts', role: 'Founder, DataSync', text: 'I was about to give up on my startup idea. Their 10-day sprint breathed new life into it. Now we have paying customers.', days: '10 days' },
+              { name: 'Lisa Wang', role: 'Product Manager, CloudNine', text: 'The speed is unreal. We went from napkin sketch to production app in under two weeks. Our investors were blown away.', days: '12 days' },
+            ].map((t, i) => (
+              <div key={i} className="bg-slate-900 border border-slate-800 p-8 rounded-3xl relative overflow-hidden group hover:border-brand-500/30 transition-all">
+                <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20">
+                  <span className="text-xs font-bold text-amber-400">Delivered: {t.days}</span>
+                </div>
+                <div className="flex items-center gap-1 mb-4 mt-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Sparkles key={i} className="w-4 h-4 text-yellow-500" />
+                  ))}
+                </div>
+                <p className="text-slate-300 mb-6 leading-relaxed">"{t.text}"</p>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-brand-500 to-amber-500 flex items-center justify-center text-white font-bold">
+                    {t.name.charAt(0)}
+                  </div>
+                  <div>
+                    <div className="font-bold text-white">{t.name}</div>
+                    <div className="text-sm text-slate-500">{t.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Academy Section */}
       <AcademySection onRegister={handleRegisterClick} />
+
+      {/* CTA SECTION - Urgency Driven */}
+      <section className="py-24 bg-gradient-to-br from-slate-900 via-brand-950 to-slate-900 relative overflow-hidden border-t border-slate-800">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-brand-500/10 rounded-full blur-[150px] animate-pulse"></div>
+          <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-amber-500/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }}></div>
+        </div>
+
+        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 mb-8">
+            <Hourglass className="w-4 h-4 text-amber-400 animate-pulse" />
+            <span className="text-sm text-amber-300 font-medium">Every Second Counts</span>
+          </div>
+
+          <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-6">
+            Your Idea Is <span className="text-white/40">Fading</span> Right Now
+          </h2>
+          <p className="text-xl text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+            Don't let another brilliant idea slip away. Let's build it together, <span className="text-white font-semibold">starting today</span>.
+          </p>
+
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <button
+              onClick={() => handleNavigate(AppView.CONTACT)}
+              className="group bg-gradient-to-r from-amber-500 to-brand-500 hover:from-amber-400 hover:to-brand-400 text-slate-900 px-10 py-5 rounded-xl font-bold text-lg transition-all shadow-2xl shadow-amber-500/20 flex items-center justify-center"
+            >
+              <Zap className="w-6 h-6 mr-2" />
+              Save Your Idea Now
+              <ArrowRight className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" />
+            </button>
+            <button
+              onClick={() => handleNavigate(AppView.EDUCATION)}
+              className="bg-slate-800/50 hover:bg-slate-800 text-white px-10 py-5 rounded-xl font-bold text-lg transition-all border border-slate-700 flex items-center justify-center"
+            >
+              <BookOpen className="w-6 h-6 mr-2" />
+              Learn With Us
+            </button>
+          </div>
+
+          <p className="mt-8 text-slate-500 text-sm">
+            Free consultation • No commitment • Response within 24 hours
+          </p>
+        </div>
+      </section>
 
       {/* Contact Section */}
       <ContactSection />

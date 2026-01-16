@@ -1,8 +1,19 @@
 import { GoogleGenAI, Type, Modality } from "@google/genai";
 import { BusinessSolution, StudyPlan, ConceptExplanation, QuizQuestion, PracticalTask, ChatMessage, Recommendation } from "../types";
 
-// Initialize Gemini Client
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Lazy-initialize Gemini Client to prevent app crash if API key is missing
+let ai: GoogleGenAI | null = null;
+
+const getAI = (): GoogleGenAI => {
+  if (!ai) {
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY || process.env.API_KEY;
+    if (!apiKey) {
+      throw new Error('Gemini API Key is not configured. Please set VITE_GEMINI_API_KEY in your .env file.');
+    }
+    ai = new GoogleGenAI({ apiKey });
+  }
+  return ai;
+};
 
 /**
  * UTILITY: Trims chat history to save input tokens. 
@@ -14,7 +25,7 @@ const compactHistory = (history: ChatMessage[]) => {
 
 export const generateMasteryChallenge = async (topic: string, weekTitle: string, concepts: string[]) => {
   try {
-    const response = await ai.models.generateContent({
+    const response = await getAI().models.generateContent({
       model: "gemini-3-flash-preview",
       contents: `Test mastery for "${weekTitle}" in "${topic}". Key concepts: ${concepts.join(', ')}. Create 1 tough application scenario + 1 question.`,
       config: { thinkingConfig: { thinkingBudget: 0 } }
@@ -30,7 +41,7 @@ export const generateBusinessAdvice = async (
   industry: string
 ): Promise<BusinessSolution[]> => {
   try {
-    const response = await ai.models.generateContent({
+    const response = await getAI().models.generateContent({
       model: "gemini-3-flash-preview",
       contents: `Industry: ${industry}. Description: ${businessDescription}. 3 AI growth/automation solutions.`,
       config: {
@@ -58,7 +69,7 @@ export const generateBusinessAdvice = async (
 
 export const generateStudyRoadmap = async (topic: string, level: string): Promise<StudyPlan> => {
   try {
-    const response = await ai.models.generateContent({
+    const response = await getAI().models.generateContent({
       model: "gemini-3-flash-preview",
       contents: `4-week ${level} level plan for ${topic}.`,
       config: {
@@ -94,7 +105,7 @@ export const generateStudyRoadmap = async (topic: string, level: string): Promis
 
 export const explainConcept = async (concept: string, contextTopic: string): Promise<ConceptExplanation> => {
   try {
-    const response = await ai.models.generateContent({
+    const response = await getAI().models.generateContent({
       model: "gemini-flash-lite-latest",
       contents: `Explain "${concept}" for learning "${contextTopic}". One practical tip.`,
       config: {
@@ -119,7 +130,7 @@ export const explainConcept = async (concept: string, contextTopic: string): Pro
 
 export const getGroundedResources = async (concept: string, topic: string) => {
   try {
-    const response = await ai.models.generateContent({
+    const response = await getAI().models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: `Resources for "${concept}" in "${topic}".`,
       config: { tools: [{ googleSearch: {} }] },
@@ -140,7 +151,7 @@ export const getMentorResponse = async (history: ChatMessage[], newMessage: stri
     activeHistory.forEach(msg => prompt += `${msg.role === 'user' ? 'Student' : 'AI'}: ${msg.text}\n`);
     prompt += `Student: ${newMessage}\nAI:`;
 
-    const response = await ai.models.generateContent({ 
+    const response = await getAI().models.generateContent({ 
       model: "gemini-flash-lite-latest",
       contents: prompt,
       config: { thinkingConfig: { thinkingBudget: 0 } }
@@ -156,7 +167,7 @@ export const getMentorResponse = async (history: ChatMessage[], newMessage: stri
  */
 export const generateQuiz = async (topic: string, weekTitle: string, concepts: string[]): Promise<QuizQuestion[]> => {
   try {
-    const response = await ai.models.generateContent({
+    const response = await getAI().models.generateContent({
       model: "gemini-flash-lite-latest",
       contents: `Create a 10-question multiple choice quiz for "${weekTitle}" in "${topic}". Focus on concepts: ${concepts.join(', ')}. Ensure varied difficulty.`,
       config: {
@@ -189,7 +200,7 @@ export const generateQuiz = async (topic: string, weekTitle: string, concepts: s
 export const generateFinalExam = async (topic: string, roadmap: any[]): Promise<QuizQuestion[]> => {
   try {
     const summary = roadmap.map(r => r.title).join(', ');
-    const response = await ai.models.generateContent({
+    const response = await getAI().models.generateContent({
       model: "gemini-3-flash-preview",
       contents: `Generate a 20-question CUMULATIVE Final Mastery Exam for the course "${topic}". Topics covered: ${summary}. Questions should be challenging and cover all modules.`,
       config: {
@@ -218,7 +229,7 @@ export const generateFinalExam = async (topic: string, roadmap: any[]): Promise<
 
 export const generatePracticalTask = async (topic: string, weekTitle: string, concepts: string[]): Promise<PracticalTask> => {
   try {
-    const response = await ai.models.generateContent({
+    const response = await getAI().models.generateContent({
       model: "gemini-flash-lite-latest",
       contents: `Practical lab for ${weekTitle}.`,
       config: {
