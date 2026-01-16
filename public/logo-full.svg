@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 80" width="280" height="80">
+  <defs>
+    <linearGradient id="brandGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0e7490"/>
+      <stop offset="100%" style="stop-color:#06b6d4"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded square background -->
+  <rect x="5" y="5" width="70" height="70" rx="14" ry="14" fill="url(#brandGradient)"/>
+
+  <!-- Brain icon -->
+  <g transform="translate(17, 17) scale(1.9)" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/>
+    <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/>
+    <path d="M12 5v14"/>
+    <path d="M6 12h12"/>
+  </g>
+
+  <!-- Text: MIND IS GEAR -->
+  <text x="90" y="38" font-family="system-ui, -apple-system, sans-serif" font-weight="700" font-size="22" fill="white">
+    MIND IS <tspan fill="#22d3ee">GEAR</tspan>
+  </text>
+  <text x="90" y="58" font-family="system-ui, -apple-system, sans-serif" font-weight="500" font-size="10" fill="#64748b" letter-spacing="2">
+    SYSTEM V2.0
+  </text>
+</svg>
