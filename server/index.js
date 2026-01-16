@@ -244,6 +244,9 @@ const initDatabase = () => {
     )
   `);
 
+  // Fix any team members with NULL is_active (migration)
+  db.prepare('UPDATE team_members SET is_active = 1 WHERE is_active IS NULL').run();
+
   // Projects Table
   db.exec(`
     CREATE TABLE IF NOT EXISTS projects (
@@ -1251,13 +1254,13 @@ app.get('/api/admin/team', authenticateToken, requireAdmin, (req, res) => {
 
 app.post('/api/admin/team', authenticateToken, requireAdmin, (req, res) => {
   try {
-    const { name, role, bio, image, linkedin, twitter, display_order } = req.body;
+    const { name, role, bio, image, linkedin, twitter, display_order, is_active } = req.body;
     const id = uuidv4();
 
     db.prepare(`
-      INSERT INTO team_members (id, name, role, bio, image, linkedin, twitter, display_order)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `).run(id, name, role, bio, image, linkedin, twitter, display_order || 0);
+      INSERT INTO team_members (id, name, role, bio, image, linkedin, twitter, display_order, is_active)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(id, name, role, bio, image, linkedin, twitter, display_order || 0, is_active !== false ? 1 : 0);
 
     logActivity(req.user.id, 'TEAM_MEMBER_CREATED', `Admin added team member: ${name}`);
     res.json({ success: true, id });
