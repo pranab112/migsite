@@ -7,6 +7,7 @@ import { PaymentModal } from './components/PaymentModal';
 import { AdminDashboard } from './components/AdminDashboard';
 import { AppView, UserRole, UserProfile, SavedStudyPlan } from './types';
 import { db, AVAILABLE_CLASSES } from './services/database';
+import { contactApi } from './services/api';
 import { ArrowRight, Cpu, Layers, Users, Calendar, Video, CheckCircle2, TrendingUp, BookOpen, Sparkles, ArrowUpRight, Clock, Monitor, PlayCircle, Zap, Mail, Globe, BarChart, Server, Code, Activity, Linkedin, Twitter, BrainCircuit, Lock, GraduationCap, Rocket, ChevronRight, Info, Target, Shield, Brain, Timer, Hourglass } from 'lucide-react';
 
 const VIEW_PERSIST_KEY = 'mig_current_view';
@@ -338,77 +339,142 @@ const SkillForgeIntro = ({ onLoginClick }: { onLoginClick: () => void }) => (
     </div>
 );
 
-const ContactSection = () => (
-  <section id="contact" className="py-24 bg-slate-950 relative border-t border-slate-900 animate-fade-in">
-    <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16">
-        <div>
-            <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-2 block">Get in Touch</span>
-            <h2 className="text-4xl font-display font-bold text-white mb-6">Let's Build the Future</h2>
-            <p className="text-slate-400 text-lg mb-8 leading-relaxed">
-                Whether you need a custom AI architecture, corporate training for your team, or just want to explore the possibilities of the Mind is Gear system, we are ready to deploy.
-            </p>
-            
-            <div className="space-y-8">
-                <div className="flex items-center">
-                    <div className="w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center border border-slate-800 mr-6 shadow-lg">
-                        <Mail className="w-6 h-6 text-brand-400" />
-                    </div>
-                    <div>
-                        <h4 className="text-white font-bold text-lg">Email Us</h4>
-                        <p className="text-slate-500">contact@mindisgear.com</p>
-                    </div>
-                </div>
-                <div className="flex items-center">
-                    <div className="w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center border border-slate-800 mr-6 shadow-lg">
-                        <Globe className="w-6 h-6 text-indigo-400" />
-                    </div>
-                    <div>
-                        <h4 className="text-white font-bold text-lg">Global HQ</h4>
-                        <p className="text-slate-500">Kathmandu, Nepal (Operating Globally)</p>
-                    </div>
-                </div>
-                <div className="flex items-center">
-                     <div className="w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center border border-slate-800 mr-6 shadow-lg">
-                        <Users className="w-6 h-6 text-emerald-400" />
-                    </div>
-                    <div>
-                        <h4 className="text-white font-bold text-lg">Join the Team</h4>
-                        <p className="text-slate-500">careers@mindisgear.com</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+const ContactSection = () => {
+  const [formData, setFormData] = useState({ first_name: '', last_name: '', email: '', message: '' });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
 
-        <form className="bg-slate-900 border border-slate-800 p-8 rounded-[2rem] shadow-2xl relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500/10 rounded-full blur-3xl group-hover:bg-brand-500/20 transition-all"></div>
-            
-            <h3 className="text-xl font-bold text-white mb-6">Send a Transmission</h3>
-            
-            <div className="grid grid-cols-2 gap-4 mb-4">
-                <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">First Name</label>
-                    <input type="text" className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:border-brand-500 outline-none transition-colors" placeholder="John" />
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.first_name || !formData.last_name || !formData.email || !formData.message) {
+      setError('Please fill in all fields');
+      return;
+    }
+    setLoading(true);
+    setError('');
+    try {
+      await contactApi.submit(formData);
+      setSuccess(true);
+      setFormData({ first_name: '', last_name: '', email: '', message: '' });
+      setTimeout(() => setSuccess(false), 5000);
+    } catch (err: any) {
+      setError(err.message || 'Failed to send message');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <section id="contact" className="py-24 bg-slate-950 relative border-t border-slate-900 animate-fade-in">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div>
+              <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-2 block">Get in Touch</span>
+              <h2 className="text-4xl font-display font-bold text-white mb-6">Let's Build the Future</h2>
+              <p className="text-slate-400 text-lg mb-8 leading-relaxed">
+                  Whether you need a custom AI architecture, corporate training for your team, or just want to explore the possibilities of the Mind is Gear system, we are ready to deploy.
+              </p>
+
+              <div className="space-y-8">
+                  <div className="flex items-center">
+                      <div className="w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center border border-slate-800 mr-6 shadow-lg">
+                          <Mail className="w-6 h-6 text-brand-400" />
+                      </div>
+                      <div>
+                          <h4 className="text-white font-bold text-lg">Email Us</h4>
+                          <p className="text-slate-500">contact@mindisgear.com</p>
+                      </div>
+                  </div>
+                  <div className="flex items-center">
+                      <div className="w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center border border-slate-800 mr-6 shadow-lg">
+                          <Globe className="w-6 h-6 text-indigo-400" />
+                      </div>
+                      <div>
+                          <h4 className="text-white font-bold text-lg">Global HQ</h4>
+                          <p className="text-slate-500">Kathmandu, Nepal (Operating Globally)</p>
+                      </div>
+                  </div>
+                  <div className="flex items-center">
+                       <div className="w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center border border-slate-800 mr-6 shadow-lg">
+                          <Users className="w-6 h-6 text-emerald-400" />
+                      </div>
+                      <div>
+                          <h4 className="text-white font-bold text-lg">Join the Team</h4>
+                          <p className="text-slate-500">careers@mindisgear.com</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <form onSubmit={handleSubmit} className="bg-slate-900 border border-slate-800 p-8 rounded-[2rem] shadow-2xl relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500/10 rounded-full blur-3xl group-hover:bg-brand-500/20 transition-all"></div>
+
+              <h3 className="text-xl font-bold text-white mb-6">Send a Transmission</h3>
+
+              {success && (
+                <div className="mb-4 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-sm">
+                  Message sent successfully! We'll get back to you soon.
                 </div>
-                <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">Last Name</label>
-                    <input type="text" className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:border-brand-500 outline-none transition-colors" placeholder="Doe" />
+              )}
+              {error && (
+                <div className="mb-4 p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm">
+                  {error}
                 </div>
-            </div>
-            <div className="space-y-2 mb-4">
-                <label className="text-[10px] font-bold text-slate-500 uppercase">Email Address</label>
-                <input type="email" className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:border-brand-500 outline-none transition-colors" placeholder="john@company.com" />
-            </div>
-             <div className="space-y-2 mb-6">
-                <label className="text-[10px] font-bold text-slate-500 uppercase">Message</label>
-                <textarea className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:border-brand-500 outline-none transition-colors h-32 resize-none" placeholder="Tell us about your project..."></textarea>
-            </div>
-            <button type="button" className="w-full bg-white text-slate-950 font-bold py-4 rounded-xl hover:bg-slate-200 transition-colors flex items-center justify-center shadow-lg">
-                Send Message <ArrowRight className="w-5 h-5 ml-2" />
-            </button>
-        </form>
-    </div>
-  </section>
-);
+              )}
+
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-slate-500 uppercase">First Name</label>
+                      <input
+                        type="text"
+                        value={formData.first_name}
+                        onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
+                        className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:border-brand-500 outline-none transition-colors"
+                        placeholder="John"
+                      />
+                  </div>
+                  <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-slate-500 uppercase">Last Name</label>
+                      <input
+                        type="text"
+                        value={formData.last_name}
+                        onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
+                        className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:border-brand-500 outline-none transition-colors"
+                        placeholder="Doe"
+                      />
+                  </div>
+              </div>
+              <div className="space-y-2 mb-4">
+                  <label className="text-[10px] font-bold text-slate-500 uppercase">Email Address</label>
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:border-brand-500 outline-none transition-colors"
+                    placeholder="john@company.com"
+                  />
+              </div>
+               <div className="space-y-2 mb-6">
+                  <label className="text-[10px] font-bold text-slate-500 uppercase">Message</label>
+                  <textarea
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:border-brand-500 outline-none transition-colors h-32 resize-none"
+                    placeholder="Tell us about your project..."
+                  ></textarea>
+              </div>
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-white text-slate-950 font-bold py-4 rounded-xl hover:bg-slate-200 transition-colors flex items-center justify-center shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? 'Sending...' : 'Send Message'} {!loading && <ArrowRight className="w-5 h-5 ml-2" />}
+              </button>
+          </form>
+      </div>
+    </section>
+  );
+};
 
 const App: React.FC = () => {
   const [user, setUser] = useState<UserProfile | null>(null);
