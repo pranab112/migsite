@@ -382,7 +382,7 @@ const ContactSection = () => {
                       </div>
                       <div>
                           <h4 className="text-white font-bold text-lg">Email Us</h4>
-                          <p className="text-slate-500">contact@mindisgear.com</p>
+                          <p className="text-slate-500">mindisgear@gmail.com</p>
                       </div>
                   </div>
                   <div className="flex items-center">
@@ -400,7 +400,7 @@ const ContactSection = () => {
                       </div>
                       <div>
                           <h4 className="text-white font-bold text-lg">Join the Team</h4>
-                          <p className="text-slate-500">careers@mindisgear.com</p>
+                          <p className="text-slate-500">mindisgear@gmail.com</p>
                       </div>
                   </div>
               </div>
