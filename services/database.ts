@@ -15,7 +15,7 @@ const checkBackend = async () => {
     const response = await fetch(`${API_BASE}/api/system/health`, { method: 'GET' });
     if (response.ok) {
       useBackend = true;
-      console.log('MindGear: Connected to SQLite backend');
+      console.log('MindGear: Connected to backend');
     }
   } catch {
     useBackend = false;

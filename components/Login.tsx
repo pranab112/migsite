@@ -76,8 +76,8 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 mb-6 shadow-2xl">
                  <Brain className="w-8 h-8 text-white" />
               </div>
-              <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4 tracking-tight">Cloud Portal</h2>
-              <p className="text-slate-400 text-lg max-w-2xl mx-auto">Access the MindGear Neural Network via secure cloud connection.</p>
+              <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4 tracking-tight">Partner Portal</h2>
+              <p className="text-slate-400 text-lg max-w-2xl mx-auto">Sign in to access your partnership dashboard and growth tools.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -87,10 +87,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                   <div className="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-600 transition-colors">
                     <Briefcase className="w-8 h-8 text-brand-400 group-hover:text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-2">Business Enterprise</h3>
-                  <p className="text-slate-400 mb-8 leading-relaxed text-sm flex-grow">Strategic AI architecture and workflow automation.</p>
+                  <h3 className="text-2xl font-bold text-white mb-2">Business Partner</h3>
+                  <p className="text-slate-400 mb-8 leading-relaxed text-sm flex-grow">Access your growth dashboard, gap analyses, and partnership tools.</p>
                   <div className="flex items-center justify-between border-t border-slate-800 pt-6 mt-auto text-xs font-bold text-slate-500 uppercase">
-                    <span>Authorized Cloud Link</span>
+                    <span>Partner Access</span>
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-all" />
                   </div>
                 </div>
@@ -102,10 +102,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                   <div className="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 transition-colors">
                     <GraduationCap className="w-8 h-8 text-indigo-400 group-hover:text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-2">Student Hub</h3>
-                  <p className="text-slate-400 mb-8 leading-relaxed text-sm flex-grow">AI roadmaps and interactive learning paths.</p>
+                  <h3 className="text-2xl font-bold text-white mb-2">Team Member</h3>
+                  <p className="text-slate-400 mb-8 leading-relaxed text-sm flex-grow">Access training programs and team development resources.</p>
                   <div className="flex items-center justify-between border-t border-slate-800 pt-6 mt-auto text-xs font-bold text-slate-500 uppercase">
-                    <span>Learner Cloud Link</span>
+                    <span>Team Access</span>
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-all" />
                   </div>
                 </div>
@@ -138,8 +138,8 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
             <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
                <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${themeGradient}`}></div>
                <div className="text-center mb-8">
-                 <h2 className="text-2xl font-bold text-white mb-2">{authMode === 'SIGN_IN' ? 'Cloud Sign In' : 'Cloud Registration'}</h2>
-                 <p className="text-slate-400 text-sm">MindGear Cloud Infrastructure</p>
+                 <h2 className="text-2xl font-bold text-white mb-2">{authMode === 'SIGN_IN' ? 'Sign In' : 'Create Account'}</h2>
+                 <p className="text-slate-400 text-sm">Mind is Gear Partner Portal</p>
                </div>
               
               {error && (
@@ -174,14 +174,14 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                  </div>
 
                  <button type="submit" disabled={loading} className={`w-full py-3.5 rounded-xl font-bold text-white shadow-lg transition-all transform hover:-translate-y-0.5 mt-4 flex items-center justify-center bg-gradient-to-r ${themeGradient}`}>
-                   {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <span className="flex items-center">{authMode === 'SIGN_IN' ? 'Link Account' : 'Initialize Account'}<ArrowRight className="ml-2 w-5 h-5" /></span>}
+                   {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <span className="flex items-center">{authMode === 'SIGN_IN' ? 'Sign In' : 'Create Account'}<ArrowRight className="ml-2 w-5 h-5" /></span>}
                  </button>
                </form>
 
                {selectedRole !== 'ADMIN' && (
                  <div className="mt-6 text-center pt-6 border-t border-slate-800">
                     <button onClick={() => { setAuthMode(authMode === 'SIGN_IN' ? 'SIGN_UP' : 'SIGN_IN'); setError(null); }} className={`font-bold hover:underline text-sm ${selectedRole === 'BUSINESS' ? 'text-brand-400' : 'text-indigo-400'}`}>
-                      {authMode === 'SIGN_IN' ? 'Create Cloud Account' : 'Use Existing Account'}
+                      {authMode === 'SIGN_IN' ? 'Create New Account' : 'Use Existing Account'}
                     </button>
                  </div>
                )}

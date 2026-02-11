@@ -5,10 +5,11 @@ import { SkillForge } from './components/SkillForge';
 import { Login } from './components/Login';
 import { PaymentModal } from './components/PaymentModal';
 import { AdminDashboard } from './components/AdminDashboard';
+import { BusinessAdvisor } from './components/BusinessAdvisor';
 import { AppView, UserRole, UserProfile, SavedStudyPlan } from './types';
 import { db, AVAILABLE_CLASSES } from './services/database';
 import { contactApi } from './services/api';
-import { ArrowRight, Cpu, Layers, Users, Calendar, Video, CheckCircle2, TrendingUp, BookOpen, Sparkles, ArrowUpRight, Clock, Monitor, PlayCircle, Zap, Mail, Globe, BarChart, Server, Code, Activity, Linkedin, Twitter, BrainCircuit, Lock, GraduationCap, Rocket, ChevronRight, Info, Target, Shield, Brain, Timer, Hourglass } from 'lucide-react';
+import { ArrowRight, Cpu, Layers, Users, Calendar, Video, CheckCircle2, TrendingUp, BookOpen, Sparkles, ArrowUpRight, Clock, Monitor, PlayCircle, Zap, Mail, Globe, BarChart, Server, Code, Activity, Linkedin, Twitter, BrainCircuit, Lock, GraduationCap, Rocket, ChevronRight, Info, Target, Shield, Brain, Timer, Hourglass, Search } from 'lucide-react';
 
 const VIEW_PERSIST_KEY = 'mig_current_view';
 const BRIDGE_PERSIST_KEY = 'mig_bridge_topic';
@@ -20,8 +21,8 @@ const FEATURED_PROJECTS = [
     client: 'Global Shipping Corp',
     category: 'Supply Chain AI',
     image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1000&auto=format&fit=crop',
-    description: 'A fully autonomous fleet management system that reduced delivery latency by 40% using predictive routing algorithms.',
-    stats: ['40% Faster Delivery', '2.4M Routes/Day'],
+    description: 'Identified critical gaps in fleet routing efficiency. Built an autonomous management system that reduced delivery latency by 40% — and continue to optimize quarterly.',
+    stats: ['18-Month Partnership', '40% Efficiency Gain'],
     tags: ['Python', 'TensorFlow', 'IoT']
   },
   {
@@ -30,8 +31,8 @@ const FEATURED_PROJECTS = [
     client: 'NeoBank Systems',
     category: 'FinTech Security',
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop',
-    description: 'Real-time fraud detection engine processing high-frequency transactions with 99.9% accuracy via anomaly detection models.',
-    stats: ['$500M Secured', '12ms Latency'],
+    description: 'Discovered a fraud detection gap that was costing millions. Built a real-time engine processing high-frequency transactions with 99.9% accuracy — ongoing partnership since 2024.',
+    stats: ['2-Year Partner', '$500M Secured'],
     tags: ['Go', 'Kafka', 'Vertex AI']
   },
   {
@@ -40,8 +41,8 @@ const FEATURED_PROJECTS = [
     client: 'City General Hospital',
     category: 'Healthcare Data',
     image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1000&auto=format&fit=crop',
-    description: 'Unified patient data pipeline that utilizes NLP to summarize clinical notes and automate insurance coding.',
-    stats: ['85% Less Paperwork', 'HIPAA Compliant'],
+    description: 'Gap analysis revealed 85% of staff time was lost to paperwork. Built a unified patient data pipeline using NLP — now expanding to three additional departments.',
+    stats: ['Ongoing Partner', '85% Less Paperwork'],
     tags: ['React', 'NLP', 'Cloud Run']
   }
 ];
@@ -52,11 +53,11 @@ const ProjectsSection = () => (
     <div className="max-w-7xl mx-auto px-6">
        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
-            <span className="text-indigo-400 font-bold tracking-widest text-sm uppercase mb-2 block">System Portfolio</span>
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-white">Deployed Architectures</h2>
+            <span className="text-indigo-400 font-bold tracking-widest text-sm uppercase mb-2 block">Partnership Results</span>
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-white">Growth Stories</h2>
           </div>
           <p className="text-slate-400 max-w-sm text-sm md:text-right">
-             Real-world systems engineered by Mind is Gear. From FinTech to Healthcare, we build resilient infrastructure.
+             Real partnerships, real results. See how we've helped businesses discover gaps and build lasting growth.
           </p>
        </div>
 
@@ -71,7 +72,7 @@ const ProjectsSection = () => (
                 </div>
                 <div className="p-8">
                    <h3 className="text-xl font-bold text-white mb-1">{project.title}</h3>
-                   <p className="text-xs text-indigo-400 font-medium mb-4 flex items-center"><Globe className="w-3 h-3 mr-1" /> Client: {project.client}</p>
+                   <p className="text-xs text-indigo-400 font-medium mb-4 flex items-center"><Globe className="w-3 h-3 mr-1" /> Partner: {project.client}</p>
                    <p className="text-slate-400 text-sm mb-6 line-clamp-3 leading-relaxed">
                       {project.description}
                    </p>
@@ -162,10 +163,10 @@ const TeamSection = () => {
 
        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-20">
-             <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-2 block">The Architects</span>
+             <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-2 block">Your Growth Team</span>
              <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-6">Meet Our Team</h2>
              <p className="text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed">
-                We are a collective of researchers, engineers, and strategists dedicated to bridging the gap between biological intelligence and synthetic cognition.
+                We are a team of strategists, engineers, and growth specialists committed to understanding your business and helping you compete globally.
              </p>
           </div>
 
@@ -219,8 +220,8 @@ const AcademySection = ({ onRegister }: { onRegister: (title: string, price: num
     <div className="max-w-7xl mx-auto px-6 relative z-10">
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
         <div>
-           <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-2 block">Professional Certification</span>
-           <h2 className="text-3xl md:text-5xl font-display font-bold text-white">Online Academy</h2>
+           <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-2 block">Partnership Benefit</span>
+           <h2 className="text-3xl md:text-5xl font-display font-bold text-white">Client Training Programs</h2>
         </div>
         <button className="text-slate-400 hover:text-white font-bold text-sm flex items-center transition-colors">
             View All Courses <ArrowRight className="w-4 h-4 ml-2" />
@@ -251,7 +252,7 @@ const AcademySection = ({ onRegister }: { onRegister: (title: string, price: num
                     onClick={() => onRegister(course.title, parseInt(course.price.replace(/\D/g,'')), course.id)} 
                     className="w-full bg-slate-800 hover:bg-brand-600 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center group-hover:shadow-lg"
                 >
-                    Enroll Now <ArrowRight className="w-4 h-4 ml-2" />
+                    Request Access <ArrowRight className="w-4 h-4 ml-2" />
                 </button>
               </div>
            </div>
@@ -266,34 +267,34 @@ const SkillForgeIntro = ({ onLoginClick }: { onLoginClick: () => void }) => (
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-900/30 border border-brand-500/30 text-brand-400 text-[10px] font-bold uppercase tracking-widest mb-6">
-                    <Sparkles className="w-3 h-3" /> AI Curriculum Generator
+                    <Sparkles className="w-3 h-3" /> Client Training Platform
                 </div>
                 <h1 className="text-4xl md:text-6xl font-display font-bold text-white mb-6 leading-tight">
-                    Forge Your Path to <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-indigo-500">Mastery</span>
+                    Build Your Team's <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-indigo-500">Competitive Edge</span>
                 </h1>
                 <p className="text-slate-400 text-lg mb-8 leading-relaxed">
-                    Skill Forge utilizes advanced generative AI to build personalized learning roadmaps, interactive quizzes, and final certification exams tailored specifically to your goals.
+                    Our AI-powered training platform builds custom programs, interactive assessments, and certification tracks tailored to your team's specific skill gaps.
                 </p>
-                
+
                 <div className="space-y-4 mb-10">
                     <div className="flex items-start">
                         <div className="p-2 bg-slate-900 rounded-lg mr-4 border border-slate-800"><BrainCircuit className="w-5 h-5 text-brand-400" /></div>
                         <div>
-                            <h4 className="text-white font-bold">Dynamic Curriculums</h4>
-                            <p className="text-sm text-slate-500">Roadmaps adapt to your chosen topic and proficiency level.</p>
+                            <h4 className="text-white font-bold">Custom Training Paths</h4>
+                            <p className="text-sm text-slate-500">Programs adapt to your team's needs and proficiency level.</p>
                         </div>
                     </div>
                     <div className="flex items-start">
                         <div className="p-2 bg-slate-900 rounded-lg mr-4 border border-slate-800"><CheckCircle2 className="w-5 h-5 text-emerald-400" /></div>
                         <div>
-                            <h4 className="text-white font-bold">Verified Assessments</h4>
-                            <p className="text-sm text-slate-500">Weekly quizzes and comprehensive final exams to prove your skills.</p>
+                            <h4 className="text-white font-bold">Measurable Progress</h4>
+                            <p className="text-sm text-slate-500">Weekly assessments and comprehensive certifications to track team growth.</p>
                         </div>
                     </div>
                 </div>
 
                 <button onClick={onLoginClick} className="px-8 py-4 bg-white text-slate-950 rounded-xl font-bold hover:bg-slate-200 transition-colors flex items-center shadow-xl shadow-white/5">
-                    Start Forging Now <ArrowRight className="w-5 h-5 ml-2" />
+                    Start Training <ArrowRight className="w-5 h-5 ml-2" />
                 </button>
             </div>
 
@@ -369,10 +370,10 @@ const ContactSection = () => {
     <section id="contact" className="py-24 bg-slate-950 relative border-t border-slate-900 animate-fade-in">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16">
           <div>
-              <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-2 block">Get in Touch</span>
-              <h2 className="text-4xl font-display font-bold text-white mb-6">Let's Build the Future</h2>
+              <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-2 block">Start Your Partnership</span>
+              <h2 className="text-4xl font-display font-bold text-white mb-6">Let's Find Your Growth Gaps</h2>
               <p className="text-slate-400 text-lg mb-8 leading-relaxed">
-                  Whether you need a custom AI architecture, corporate training for your team, or just want to explore the possibilities of the Mind is Gear system, we are ready to deploy.
+                  Whether you need a gap analysis, custom solutions, or team training, we're ready to commit to your long-term growth. Let's start the conversation.
               </p>
 
               <div className="space-y-8">
@@ -409,7 +410,7 @@ const ContactSection = () => {
           <form onSubmit={handleSubmit} className="bg-slate-900 border border-slate-800 p-8 rounded-[2rem] shadow-2xl relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500/10 rounded-full blur-3xl group-hover:bg-brand-500/20 transition-all"></div>
 
-              <h3 className="text-xl font-bold text-white mb-6">Send a Transmission</h3>
+              <h3 className="text-xl font-bold text-white mb-6">Start a Conversation</h3>
 
               {success && (
                 <div className="mb-4 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-sm">
@@ -475,6 +476,92 @@ const ContactSection = () => {
     </section>
   );
 };
+
+const GapAnalysisIntro = ({ onLoginClick }: { onLoginClick: () => void }) => (
+    <div className="py-24 relative overflow-hidden animate-fade-in">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-900/30 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold uppercase tracking-widest mb-6">
+                    <Target className="w-3 h-3" /> Free Business Analysis
+                </div>
+                <h1 className="text-4xl md:text-6xl font-display font-bold text-white mb-6 leading-tight">
+                    Discover Your Business's <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-emerald-500">Hidden Gaps</span>
+                </h1>
+                <p className="text-slate-400 text-lg mb-8 leading-relaxed">
+                    Our AI-powered Gap Analysis Engine examines your business operations, identifies overlooked opportunities, and generates actionable recommendations — completely free.
+                </p>
+
+                <div className="space-y-4 mb-10">
+                    <div className="flex items-start">
+                        <div className="p-2 bg-slate-900 rounded-lg mr-4 border border-slate-800"><BrainCircuit className="w-5 h-5 text-brand-400" /></div>
+                        <div>
+                            <h4 className="text-white font-bold">AI-Powered Analysis</h4>
+                            <p className="text-sm text-slate-500">Advanced AI examines your industry, operations, and competitive landscape.</p>
+                        </div>
+                    </div>
+                    <div className="flex items-start">
+                        <div className="p-2 bg-slate-900 rounded-lg mr-4 border border-slate-800"><CheckCircle2 className="w-5 h-5 text-emerald-400" /></div>
+                        <div>
+                            <h4 className="text-white font-bold">Actionable Recommendations</h4>
+                            <p className="text-sm text-slate-500">Get specific, prioritized solutions you can act on immediately.</p>
+                        </div>
+                    </div>
+                    <div className="flex items-start">
+                        <div className="p-2 bg-slate-900 rounded-lg mr-4 border border-slate-800"><ArrowRight className="w-5 h-5 text-indigo-400" /></div>
+                        <div>
+                            <h4 className="text-white font-bold">Bridge to Partnership</h4>
+                            <p className="text-sm text-slate-500">Love the results? Turn your analysis into a full growth partnership.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button onClick={onLoginClick} className="px-8 py-4 bg-white text-slate-950 rounded-xl font-bold hover:bg-slate-200 transition-colors flex items-center shadow-xl shadow-white/5">
+                    Sign In to Start Analysis <ArrowRight className="w-5 h-5 ml-2" />
+                </button>
+            </div>
+
+            <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-brand-500 to-emerald-600 rounded-[2.5rem] rotate-3 opacity-20 blur-xl"></div>
+                <div className="relative bg-slate-900 border border-slate-800 rounded-[2.5rem] p-8 shadow-2xl overflow-hidden">
+                    <div className="flex items-center justify-between mb-8 border-b border-slate-800 pb-4">
+                        <div className="flex gap-2">
+                            <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
+                            <div className="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                            <div className="w-3 h-3 rounded-full bg-green-500/50"></div>
+                        </div>
+                        <div className="text-[10px] font-mono text-slate-600">GAP_ANALYSIS.ENGINE</div>
+                    </div>
+                    <div className="space-y-4 font-mono text-sm">
+                        <div className="flex gap-4">
+                            <span className="text-slate-500">01</span>
+                            <span className="text-brand-400">analyze_gaps</span>
+                            <span className="text-slate-300">("E-commerce, Southeast Asia")</span>
+                        </div>
+                        <div className="flex gap-4">
+                            <span className="text-slate-500">02</span>
+                            <span className="text-emerald-400">gap_found</span>
+                            <span className="text-slate-300">[Mobile checkout abandonment: 68%]</span>
+                        </div>
+                        <div className="flex gap-4">
+                            <span className="text-slate-500">03</span>
+                            <span className="text-emerald-400">recommendation</span>
+                            <span className="text-slate-300">[Implement one-tap payment flow]</span>
+                        </div>
+                        <div className="flex gap-4">
+                            <span className="text-slate-500">04</span>
+                            <span className="text-brand-400">impact_estimate</span>
+                            <span className="text-slate-300">[+35% conversion potential]</span>
+                        </div>
+                        <div className="flex gap-4 mt-8 p-4 bg-slate-950 rounded-xl border border-slate-800 items-center justify-center">
+                            <Lock className="w-4 h-4 text-slate-500 mr-2" />
+                            <span className="text-slate-500">Sign in to run your free analysis</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+);
 
 const App: React.FC = () => {
   const [user, setUser] = useState<UserProfile | null>(null);
@@ -634,11 +721,10 @@ const App: React.FC = () => {
                 <div className="absolute top-0 right-0 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
                 <div className="relative z-10">
                     <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
-                        System Online. Welcome, <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-indigo-500">{user?.name}</span>.
+                        Welcome back, <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-indigo-500">{user?.name}</span>.
                     </h1>
                     <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
-                        Mind is Gear operates at the intersection of biological creativity and artificial speed. 
-                        Select a protocol below to begin enhancing your capabilities or building your infrastructure.
+                        Your growth dashboard is ready. Continue your training, explore gap analyses, or review your partnership progress.
                     </p>
                 </div>
             </div>
@@ -679,45 +765,45 @@ const App: React.FC = () => {
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {/* Skill Forge Card */}
+                    {/* Team Training Card */}
                     <div onClick={() => setCurrentView(AppView.EDUCATION)} className="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-brand-500/50 transition-all cursor-pointer group hover:-translate-y-1">
                         <div className="w-12 h-12 bg-slate-950 rounded-xl flex items-center justify-center mb-6 border border-slate-800 group-hover:border-brand-500/50 group-hover:bg-brand-900/10 transition-colors">
                             <Sparkles className="w-6 h-6 text-brand-400" />
                         </div>
-                        <h3 className="text-xl font-bold text-white mb-2">Skill Forge</h3>
+                        <h3 className="text-xl font-bold text-white mb-2">Team Training</h3>
                         <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                            Generative AI curriculum builder. Create custom learning roadmaps for any topic instantly.
+                            AI-powered training programs. Build custom learning paths for your team's skill gaps.
                         </p>
                         <span className="text-brand-400 text-xs font-bold uppercase tracking-wider flex items-center group-hover:underline">
-                            Initialize <ChevronRight className="w-3 h-3 ml-1" />
+                            Start Training <ChevronRight className="w-3 h-3 ml-1" />
                         </span>
                     </div>
 
-                    {/* Academy Card */}
+                    {/* Growth Programs Card */}
                     <div onClick={() => setCurrentView(AppView.ACADEMY)} className="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-indigo-500/50 transition-all cursor-pointer group hover:-translate-y-1">
                         <div className="w-12 h-12 bg-slate-950 rounded-xl flex items-center justify-center mb-6 border border-slate-800 group-hover:border-indigo-500/50 group-hover:bg-indigo-900/10 transition-colors">
                             <BookOpen className="w-6 h-6 text-indigo-400" />
                         </div>
-                        <h3 className="text-xl font-bold text-white mb-2">Academy</h3>
+                        <h3 className="text-xl font-bold text-white mb-2">Growth Programs</h3>
                         <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                            Instructor-led professional certification tracks. Master Full Stack AI and Prompt Engineering.
+                            Instructor-led programs to upskill your team in AI, development, and strategic thinking.
                         </p>
                         <span className="text-indigo-400 text-xs font-bold uppercase tracking-wider flex items-center group-hover:underline">
-                            Browse Catalog <ChevronRight className="w-3 h-3 ml-1" />
+                            Browse Programs <ChevronRight className="w-3 h-3 ml-1" />
                         </span>
                     </div>
 
-                    {/* Build / Deploy Card */}
-                    <div onClick={() => setCurrentView(AppView.CONTACT)} className="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-emerald-500/50 transition-all cursor-pointer group hover:-translate-y-1">
+                    {/* Gap Analysis Card */}
+                    <div onClick={() => setCurrentView(AppView.GAP_ANALYSIS)} className="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-emerald-500/50 transition-all cursor-pointer group hover:-translate-y-1">
                         <div className="w-12 h-12 bg-slate-950 rounded-xl flex items-center justify-center mb-6 border border-slate-800 group-hover:border-emerald-500/50 group-hover:bg-emerald-900/10 transition-colors">
-                            <Rocket className="w-6 h-6 text-emerald-400" />
+                            <Target className="w-6 h-6 text-emerald-400" />
                         </div>
-                        <h3 className="text-xl font-bold text-white mb-2">Rapid Deploy</h3>
+                        <h3 className="text-xl font-bold text-white mb-2">Gap Analysis</h3>
                         <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                            Need a custom AI solution? We build and deploy SaaS MVPs in as little as 7 days.
+                            Discover hidden gaps in your business. Get AI-powered insights and actionable recommendations.
                         </p>
                         <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider flex items-center group-hover:underline">
-                            Start Project <ChevronRight className="w-3 h-3 ml-1" />
+                            Run Analysis <ChevronRight className="w-3 h-3 ml-1" />
                         </span>
                     </div>
                 </div>
@@ -728,9 +814,9 @@ const App: React.FC = () => {
                 <div className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800 flex items-start gap-4">
                     <Info className="w-5 h-5 text-slate-500 flex-shrink-0 mt-0.5" />
                     <div>
-                        <h4 className="text-white font-bold text-sm mb-1">System Philosophy</h4>
+                        <h4 className="text-white font-bold text-sm mb-1">Our Philosophy</h4>
                         <p className="text-slate-400 text-xs leading-relaxed">
-                            "The human mind is the gear that turns the machine of intelligence." We believe AI is an extension of human will, not a replacement.
+                            "Real growth comes from understanding where you are, where you could be, and building the bridge between." We commit to your long-term success.
                         </p>
                     </div>
                 </div>
@@ -761,62 +847,62 @@ const App: React.FC = () => {
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 py-20 text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 mb-8 animate-fade-in">
-            <Hourglass className="w-4 h-4 text-amber-400" />
-            <span className="text-sm text-amber-300 font-medium">Rapid Execution Partner</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-500/10 border border-brand-500/20 mb-8 animate-fade-in">
+            <Target className="w-4 h-4 text-brand-400" />
+            <span className="text-sm text-brand-300 font-medium">Strategic Growth Partner</span>
           </div>
 
-          {/* Main Headline - The Fade Effect */}
+          {/* Main Headline */}
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6 tracking-tight leading-[1.1]">
-            <span className="block text-white/40 animate-pulse" style={{ animationDuration: '3s' }}>Ideas Fade Away</span>
+            <span className="block text-white">Every Business Has</span>
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-indigo-400 to-brand-400">Gaps</span>
           </h1>
 
-          {/* The Promise - Solid & Bold */}
+          {/* The Promise */}
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-8 tracking-tight animate-slide-up">
-            Before fading, we make your
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-amber-400 to-brand-400">system ready.</span>
+            We find them. We fix them. We grow with you.
           </h2>
 
           {/* Supporting Text */}
           <p className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto mb-12 leading-relaxed">
-            From concept to production in <span className="text-amber-400 font-bold">10 days</span>. We capture your vision and build it into reality before the moment passes.
+            Mind is Gear is your <span className="text-brand-400 font-bold">long-term growth partner</span>. We analyze your business, discover hidden gaps, build custom solutions, and commit to your success — not just for a sprint, but for the journey.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16 animate-fade-in">
             <button
-              onClick={() => handleNavigate(AppView.CONTACT)}
-              className="group bg-gradient-to-r from-amber-500 to-brand-500 hover:from-amber-400 hover:to-brand-400 text-slate-900 px-8 py-4 rounded-xl font-bold transition-all shadow-2xl shadow-amber-500/20 flex items-center justify-center"
+              onClick={() => handleNavigate(AppView.GAP_ANALYSIS)}
+              className="group bg-gradient-to-r from-brand-500 to-indigo-500 hover:from-brand-400 hover:to-indigo-400 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-2xl shadow-brand-500/20 flex items-center justify-center"
             >
-              <Zap className="w-5 h-5 mr-2" />
-              Save Your Idea
+              <Target className="w-5 h-5 mr-2" />
+              Get Your Free Gap Analysis
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </button>
             <button
-              onClick={() => document.getElementById('sprint-timeline')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => document.getElementById('partnership-tiers')?.scrollIntoView({ behavior: 'smooth' })}
               className="bg-slate-900 hover:bg-slate-800 text-white px-8 py-4 rounded-xl font-bold transition-all border border-slate-700 flex items-center justify-center"
             >
-              <Timer className="w-5 h-5 mr-2" />
-              See Our Speed
+              <Layers className="w-5 h-5 mr-2" />
+              See Partnership Tiers
             </button>
           </div>
 
-          {/* Speed Stats */}
+          {/* Stats */}
           <div className="flex flex-wrap justify-center items-center gap-6 md:gap-12 text-slate-400">
             <div className="flex items-center gap-2 bg-slate-900/50 px-4 py-2 rounded-full border border-slate-800">
-              <Rocket className="w-4 h-4 text-amber-500" />
-              <span className="font-bold text-white">10-Day</span>
-              <span className="text-sm">MVP</span>
+              <Users className="w-4 h-4 text-brand-500" />
+              <span className="font-bold text-white">Long-Term</span>
+              <span className="text-sm">Partnerships</span>
             </div>
             <div className="flex items-center gap-2 bg-slate-900/50 px-4 py-2 rounded-full border border-slate-800">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-              <span className="font-bold text-white">50+</span>
-              <span className="text-sm">Ideas Launched</span>
+              <Layers className="w-4 h-4 text-indigo-500" />
+              <span className="font-bold text-white">3</span>
+              <span className="text-sm">Partnership Tiers</span>
             </div>
             <div className="flex items-center gap-2 bg-slate-900/50 px-4 py-2 rounded-full border border-slate-800">
-              <Clock className="w-4 h-4 text-brand-500" />
-              <span className="font-bold text-white">99%</span>
-              <span className="text-sm">On-Time</span>
+              <Globe className="w-4 h-4 text-emerald-500" />
+              <span className="font-bold text-white">Global</span>
+              <span className="text-sm">Reach</span>
             </div>
           </div>
         </div>
@@ -827,24 +913,24 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* THE FADE PROBLEM SECTION */}
+      {/* THE GAP PROBLEM SECTION */}
       <section className="py-24 bg-slate-900 border-y border-slate-800 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 via-transparent to-amber-500/5"></div>
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
             <span className="text-red-400 font-bold tracking-widest text-sm uppercase mb-4 block">The Problem</span>
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">While You Wait, Your Idea Loses...</h2>
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">Most Businesses Can't See Their Own Gaps</h2>
             <p className="text-slate-400 max-w-2xl mx-auto text-lg">
-              Every day of delay costs you more than you realize
+              The biggest threats to your growth are the ones you don't even know exist
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: Timer, title: 'Market Timing', desc: 'Competitors are already building. First-mover advantage slips away.', color: 'red' },
-              { icon: TrendingUp, title: 'Momentum', desc: 'Energy and enthusiasm diminish with each passing week.', color: 'orange' },
-              { icon: Target, title: 'Opportunity', desc: 'Investors and partners move to the next pitch in line.', color: 'amber' },
-              { icon: Users, title: 'Team Alignment', desc: 'Stakeholder confidence fades without visible progress.', color: 'yellow' },
+              { icon: Shield, title: 'Blind Spots', desc: 'Internal teams are too close to the problem to see what\'s missing.', color: 'red' },
+              { icon: TrendingUp, title: 'Missed Opportunities', desc: 'Revenue-generating possibilities go unnoticed without outside perspective.', color: 'orange' },
+              { icon: Target, title: 'Competitive Pressure', desc: 'Competitors are evolving while you\'re focused on daily operations.', color: 'amber' },
+              { icon: Users, title: 'Scattered Efforts', desc: 'Without a clear gap map, teams invest energy in the wrong areas.', color: 'yellow' },
             ].map((item, i) => (
               <div key={i} className="bg-slate-950/50 border border-slate-800 p-6 rounded-2xl hover:border-red-500/30 transition-all group">
                 <div className={`w-12 h-12 rounded-xl bg-${item.color}-500/10 flex items-center justify-center mb-4 group-hover:bg-${item.color}-500/20 transition-all`}>
@@ -858,7 +944,7 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* OUR PROMISE / SOLUTION SECTION */}
+      {/* OUR COMMITMENT / SOLUTION SECTION */}
       <section className="py-24 bg-slate-950 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-500/50 to-transparent"></div>
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-brand-500/5 rounded-full blur-[100px]"></div>
@@ -866,63 +952,63 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-4 block">Our Promise</span>
+              <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-4 block">Our Commitment</span>
               <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">
-                We Don't Let Ideas Die
+                We Commit to Your Growth
               </h2>
               <p className="text-xl text-slate-400 mb-8 leading-relaxed">
-                In the time others spend <span className="text-slate-300">planning meetings</span>, we're already <span className="text-brand-400 font-semibold">building your product</span>. Our rapid deployment methodology means your idea becomes reality in days, not months.
+                We don't just build and leave. We <span className="text-slate-300">analyze your business</span>, find the gaps holding you back, and <span className="text-brand-400 font-semibold">partner with you</span> to close them — month after month, year after year.
               </p>
 
               <div className="space-y-4">
                 <div className="flex items-center gap-4 p-4 bg-slate-900 rounded-xl border border-slate-800">
                   <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
-                    <Zap className="w-5 h-5 text-emerald-400" />
+                    <Target className="w-5 h-5 text-emerald-400" />
                   </div>
                   <div>
-                    <div className="font-bold text-white">Speed Without Compromise</div>
-                    <div className="text-sm text-slate-400">Fast execution doesn't mean cutting corners</div>
+                    <div className="font-bold text-white">Deep Gap Analysis</div>
+                    <div className="text-sm text-slate-400">We find what's missing before building anything</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-4 p-4 bg-slate-900 rounded-xl border border-slate-800">
                   <div className="w-10 h-10 rounded-lg bg-brand-500/10 flex items-center justify-center flex-shrink-0">
-                    <Shield className="w-5 h-5 text-brand-400" />
+                    <Code className="w-5 h-5 text-brand-400" />
                   </div>
                   <div>
-                    <div className="font-bold text-white">Production-Ready Code</div>
-                    <div className="text-sm text-slate-400">Scalable architecture from day one</div>
+                    <div className="font-bold text-white">Custom Solutions</div>
+                    <div className="text-sm text-slate-400">Tailored technology built specifically for your gaps</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-4 p-4 bg-slate-900 rounded-xl border border-slate-800">
-                  <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center flex-shrink-0">
-                    <Activity className="w-5 h-5 text-amber-400" />
+                  <div className="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center flex-shrink-0">
+                    <Users className="w-5 h-5 text-indigo-400" />
                   </div>
                   <div>
-                    <div className="font-bold text-white">Daily Progress Updates</div>
-                    <div className="text-sm text-slate-400">Watch your idea come to life in real-time</div>
+                    <div className="font-bold text-white">Ongoing Partnership</div>
+                    <div className="text-sm text-slate-400">We grow with you — continuous optimization and support</div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Visual Element - Timeline Preview */}
+            {/* Visual Element - Partnership Journey */}
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-brand-500/20 to-amber-500/20 rounded-3xl blur-xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-500/20 to-indigo-500/20 rounded-3xl blur-xl"></div>
               <div className="relative bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl">
                 <div className="flex items-center gap-3 mb-6">
-                  <Hourglass className="w-6 h-6 text-amber-400" />
-                  <span className="text-lg font-bold text-white">10-Day Sprint Timeline</span>
+                  <Layers className="w-6 h-6 text-brand-400" />
+                  <span className="text-lg font-bold text-white">Partnership Journey</span>
                 </div>
 
                 <div className="space-y-4">
                   {[
-                    { days: 'Day 1-2', phase: 'CAPTURE', desc: 'Deep dive into your vision', color: 'brand', progress: 100 },
-                    { days: 'Day 3-6', phase: 'BUILD', desc: 'Core development sprint', color: 'indigo', progress: 100 },
-                    { days: 'Day 7-9', phase: 'REFINE', desc: 'Polish and iterate', color: 'purple', progress: 100 },
-                    { days: 'Day 10', phase: 'LAUNCH', desc: 'Deploy to production', color: 'amber', progress: 100 },
+                    { phase: 'DISCOVER', desc: 'Deep dive into your business gaps', color: 'brand', progress: 100 },
+                    { phase: 'BUILD', desc: 'Custom solutions for each gap', color: 'indigo', progress: 100 },
+                    { phase: 'OPTIMIZE', desc: 'Measure, iterate, and improve', color: 'purple', progress: 100 },
+                    { phase: 'SCALE', desc: 'Expand to new markets and opportunities', color: 'emerald', progress: 100 },
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-4">
-                      <div className="w-20 text-xs font-mono text-slate-500">{item.days}</div>
+                      <div className="w-20 text-xs font-mono text-slate-500">Phase {i + 1}</div>
                       <div className="flex-grow">
                         <div className="flex items-center justify-between mb-1">
                           <span className={`text-sm font-bold text-${item.color}-400`}>{item.phase}</span>
@@ -937,8 +1023,8 @@ const App: React.FC = () => {
                 </div>
 
                 <div className="mt-6 pt-6 border-t border-slate-800 flex items-center justify-between">
-                  <span className="text-slate-400 text-sm">Total Time</span>
-                  <span className="text-2xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-amber-400">10 Days</span>
+                  <span className="text-slate-400 text-sm">Our Commitment</span>
+                  <span className="text-2xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-indigo-400">Long-Term</span>
                 </div>
               </div>
             </div>
@@ -946,63 +1032,95 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* 10-DAY SPRINT TIMELINE */}
-      <section id="sprint-timeline" className="py-24 bg-slate-900/50 border-y border-slate-800">
+      {/* PARTNERSHIP TIERS */}
+      <section id="partnership-tiers" className="py-24 bg-slate-900/50 border-y border-slate-800">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <span className="text-amber-400 font-bold tracking-widest text-sm uppercase mb-4 block">How We Beat The Fade</span>
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">The 10-Day Sprint</h2>
+            <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-4 block">Choose Your Path</span>
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">Partnership Tiers</h2>
             <p className="text-slate-400 max-w-2xl mx-auto text-lg">
-              A battle-tested process that turns ideas into production systems
+              Every partnership starts with understanding. Pick the level that fits your growth stage.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {[
-              { step: 'Days 1-2', title: 'Capture', desc: 'We understand your vision, define scope, and design the architecture', icon: Brain, color: 'brand' },
-              { step: 'Days 3-6', title: 'Build', desc: 'Rapid development with daily demos and real-time collaboration', icon: Code, color: 'indigo' },
-              { step: 'Days 7-9', title: 'Refine', desc: 'Polish UI/UX, optimize performance, and iterate on feedback', icon: Sparkles, color: 'purple' },
-              { step: 'Day 10', title: 'Launch', desc: 'Deploy to production, monitor, and hand over with full documentation', icon: Rocket, color: 'amber' },
-            ].map((item, i) => (
-              <div key={i} className="relative group">
-                <div className={`bg-slate-900 border border-slate-800 p-8 rounded-3xl hover:border-${item.color}-500/50 transition-all h-full`}>
-                  <div className={`w-14 h-14 rounded-2xl bg-${item.color}-500/10 flex items-center justify-center mb-6 group-hover:bg-${item.color}-500/20 transition-all`}>
-                    <item.icon className={`w-7 h-7 text-${item.color}-400`} />
-                  </div>
-                  <div className={`text-${item.color}-400 font-mono text-sm mb-2`}>{item.step}</div>
-                  <h3 className="text-2xl font-bold text-white mb-3">{item.title}</h3>
-                  <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
-                </div>
-                {i < 3 && (
-                  <div className="hidden md:block absolute top-1/2 -right-3 w-6 h-px bg-gradient-to-r from-slate-700 to-transparent z-10"></div>
-                )}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Starter */}
+            <div className="bg-slate-900 border border-slate-800 p-8 rounded-3xl hover:border-brand-500/50 transition-all group">
+              <div className="w-14 h-14 rounded-2xl bg-brand-500/10 flex items-center justify-center mb-6 group-hover:bg-brand-500/20 transition-all">
+                <Target className="w-7 h-7 text-brand-400" />
               </div>
-            ))}
+              <h3 className="text-2xl font-bold text-white mb-2">Starter</h3>
+              <p className="text-slate-400 text-sm leading-relaxed mb-6">Perfect for businesses just beginning to identify their growth gaps.</p>
+              <ul className="space-y-3 text-sm">
+                <li className="flex items-center text-slate-300"><CheckCircle2 className="w-4 h-4 text-brand-400 mr-3 flex-shrink-0" /> Gap Analysis Report</li>
+                <li className="flex items-center text-slate-300"><CheckCircle2 className="w-4 h-4 text-brand-400 mr-3 flex-shrink-0" /> Strategy Roadmap</li>
+                <li className="flex items-center text-slate-300"><CheckCircle2 className="w-4 h-4 text-brand-400 mr-3 flex-shrink-0" /> Monthly Check-in</li>
+              </ul>
+              <button onClick={() => handleNavigate(AppView.CONTACT)} className="w-full mt-8 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold transition-all flex items-center justify-center">
+                Get Started <ArrowRight className="w-4 h-4 ml-2" />
+              </button>
+            </div>
+
+            {/* Growth (Most Popular) */}
+            <div className="bg-slate-900 border-2 border-brand-500 p-8 rounded-3xl relative shadow-xl shadow-brand-500/10 group">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-brand-500 text-white text-xs font-bold uppercase tracking-widest rounded-full">Most Popular</div>
+              <div className="w-14 h-14 rounded-2xl bg-brand-500/20 flex items-center justify-center mb-6">
+                <TrendingUp className="w-7 h-7 text-brand-400" />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-2">Growth</h3>
+              <p className="text-slate-400 text-sm leading-relaxed mb-6">For businesses ready to invest in closing gaps and building competitive advantages.</p>
+              <ul className="space-y-3 text-sm">
+                <li className="flex items-center text-slate-300"><CheckCircle2 className="w-4 h-4 text-brand-400 mr-3 flex-shrink-0" /> Everything in Starter</li>
+                <li className="flex items-center text-slate-300"><CheckCircle2 className="w-4 h-4 text-brand-400 mr-3 flex-shrink-0" /> Custom Development</li>
+                <li className="flex items-center text-slate-300"><CheckCircle2 className="w-4 h-4 text-brand-400 mr-3 flex-shrink-0" /> Team Training Programs</li>
+                <li className="flex items-center text-slate-300"><CheckCircle2 className="w-4 h-4 text-brand-400 mr-3 flex-shrink-0" /> Quarterly Reviews</li>
+              </ul>
+              <button onClick={() => handleNavigate(AppView.CONTACT)} className="w-full mt-8 py-3 bg-brand-600 hover:bg-brand-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-brand-900/20 flex items-center justify-center">
+                Start Growing <ArrowRight className="w-4 h-4 ml-2" />
+              </button>
+            </div>
+
+            {/* Enterprise */}
+            <div className="bg-slate-900 border border-slate-800 p-8 rounded-3xl hover:border-indigo-500/50 transition-all group">
+              <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center mb-6 group-hover:bg-indigo-500/20 transition-all">
+                <Rocket className="w-7 h-7 text-indigo-400" />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-2">Enterprise</h3>
+              <p className="text-slate-400 text-sm leading-relaxed mb-6">Full-scale partnership for businesses that want a dedicated growth team.</p>
+              <ul className="space-y-3 text-sm">
+                <li className="flex items-center text-slate-300"><CheckCircle2 className="w-4 h-4 text-indigo-400 mr-3 flex-shrink-0" /> Everything in Growth</li>
+                <li className="flex items-center text-slate-300"><CheckCircle2 className="w-4 h-4 text-indigo-400 mr-3 flex-shrink-0" /> Dedicated Team</li>
+                <li className="flex items-center text-slate-300"><CheckCircle2 className="w-4 h-4 text-indigo-400 mr-3 flex-shrink-0" /> Priority Support</li>
+                <li className="flex items-center text-slate-300"><CheckCircle2 className="w-4 h-4 text-indigo-400 mr-3 flex-shrink-0" /> Annual Strategy Summits</li>
+              </ul>
+              <button onClick={() => handleNavigate(AppView.CONTACT)} className="w-full mt-8 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold transition-all flex items-center justify-center">
+                Contact Us <ArrowRight className="w-4 h-4 ml-2" />
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* SERVICES - Speed Focused */}
+      {/* SERVICES - Growth Focused */}
       <section className="py-24 bg-slate-950 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-500/5 rounded-full blur-[100px]"></div>
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
-            <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-4 block">What We Build Fast</span>
+            <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-4 block">How We Help You Grow</span>
             <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">Services</h2>
             <p className="text-slate-400 max-w-2xl mx-auto text-lg">
-              Every service optimized for speed without sacrificing quality
+              Comprehensive growth services tailored to your business needs
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Service Cards with Delivery Time */}
             {[
-              { icon: Cpu, title: 'AI Solutions', desc: 'Custom AI/ML, LLM integration, chatbots, and automation', time: '10-14 days', color: 'brand' },
-              { icon: Code, title: 'Web Applications', desc: 'Full-stack apps, SaaS platforms, and enterprise software', time: '10-21 days', color: 'indigo' },
-              { icon: Rocket, title: 'MVP Development', desc: 'Validate your idea with a production-ready prototype', time: '10 days', color: 'amber' },
-              { icon: GraduationCap, title: 'Team Training', desc: 'AI and development training with certification', time: '1-4 weeks', color: 'emerald' },
-              { icon: Server, title: 'Cloud & DevOps', desc: 'Infrastructure setup, CI/CD, and deployment automation', time: '3-7 days', color: 'purple' },
-              { icon: BarChart, title: 'Tech Consulting', desc: 'Strategy, architecture review, and AI readiness audit', time: '2-5 days', color: 'pink' },
+              { icon: Cpu, title: 'AI & Automation', desc: 'Custom AI/ML solutions, LLM integration, and workflow automation to close efficiency gaps', badge: 'Core Service', color: 'brand' },
+              { icon: Code, title: 'Digital Products', desc: 'Full-stack apps, SaaS platforms, and enterprise software built for your specific needs', badge: 'Custom Built', color: 'indigo' },
+              { icon: Target, title: 'Gap Analysis', desc: 'Comprehensive business analysis to identify hidden opportunities and competitive weaknesses', badge: 'Free Tier Available', color: 'emerald' },
+              { icon: GraduationCap, title: 'Team Development', desc: 'AI-powered training programs and certification tracks to upskill your team', badge: 'Partnership Benefit', color: 'purple' },
+              { icon: Server, title: 'Infrastructure', desc: 'Cloud setup, CI/CD pipelines, and deployment automation for scalable growth', badge: 'Growth Enabler', color: 'amber' },
+              { icon: BarChart, title: 'Strategic Consulting', desc: 'Business strategy, market positioning, and technology roadmap planning', badge: 'All Tiers', color: 'pink' },
             ].map((service, i) => (
               <div key={i} className={`group bg-gradient-to-br from-slate-900 to-slate-900/50 border border-slate-800 p-8 rounded-3xl hover:border-${service.color}-500/50 transition-all duration-300 hover:-translate-y-2`}>
                 <div className="flex items-start justify-between mb-6">
@@ -1010,7 +1128,7 @@ const App: React.FC = () => {
                     <service.icon className={`w-7 h-7 text-${service.color}-400`} />
                   </div>
                   <div className={`px-3 py-1 rounded-full bg-${service.color}-500/10 border border-${service.color}-500/20`}>
-                    <span className={`text-xs font-bold text-${service.color}-400`}>{service.time}</span>
+                    <span className={`text-xs font-bold text-${service.color}-400`}>{service.badge}</span>
                   </div>
                 </div>
                 <h3 className="text-xl font-bold text-white mb-3">{service.title}</h3>
@@ -1027,24 +1145,24 @@ const App: React.FC = () => {
       {/* Team Section */}
       <TeamSection />
 
-      {/* TESTIMONIALS - Speed Focused */}
+      {/* TESTIMONIALS - Partnership Focused */}
       <section className="py-24 bg-slate-950 relative overflow-hidden">
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-500/5 rounded-full blur-[100px]"></div>
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
-            <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-4 block">Ideas We've Saved</span>
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">Client Success Stories</h2>
+            <span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-4 block">Partner Success</span>
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">What Our Partners Say</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { name: 'Sarah Chen', role: 'CTO, TechFlow Inc', text: 'We had an idea that needed to launch before a competitor. Mind is Gear delivered our MVP in just 8 days. We beat them to market.', days: '8 days' },
-              { name: 'Michael Roberts', role: 'Founder, DataSync', text: 'I was about to give up on my startup idea. Their 10-day sprint breathed new life into it. Now we have paying customers.', days: '10 days' },
-              { name: 'Lisa Wang', role: 'Product Manager, CloudNine', text: 'The speed is unreal. We went from napkin sketch to production app in under two weeks. Our investors were blown away.', days: '12 days' },
+              { name: 'Sarah Chen', role: 'CTO, TechFlow Inc', text: 'Mind is Gear found gaps in our operations we never even considered. 18 months in, we\'ve grown revenue by 3x and our team is sharper than ever.', badge: '18-Month Partner' },
+              { name: 'Michael Roberts', role: 'Founder, DataSync', text: 'They didn\'t just build us a product — they became part of our team. Their gap analysis completely changed our go-to-market strategy.', badge: '1-Year Partner' },
+              { name: 'Lisa Wang', role: 'Product Manager, CloudNine', text: 'The training programs alone justified our partnership. But the ongoing strategic support is what truly sets Mind is Gear apart.', badge: '2-Year Partner' },
             ].map((t, i) => (
               <div key={i} className="bg-slate-900 border border-slate-800 p-8 rounded-3xl relative overflow-hidden group hover:border-brand-500/30 transition-all">
-                <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20">
-                  <span className="text-xs font-bold text-amber-400">Delivered: {t.days}</span>
+                <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20">
+                  <span className="text-xs font-bold text-brand-400">{t.badge}</span>
                 </div>
                 <div className="flex items-center gap-1 mb-4 mt-4">
                   {[...Array(5)].map((_, i) => (
@@ -1053,7 +1171,7 @@ const App: React.FC = () => {
                 </div>
                 <p className="text-slate-300 mb-6 leading-relaxed">"{t.text}"</p>
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-brand-500 to-amber-500 flex items-center justify-center text-white font-bold">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-brand-500 to-indigo-500 flex items-center justify-center text-white font-bold">
                     {t.name.charAt(0)}
                   </div>
                   <div>
@@ -1070,46 +1188,46 @@ const App: React.FC = () => {
       {/* Academy Section */}
       <AcademySection onRegister={handleRegisterClick} />
 
-      {/* CTA SECTION - Urgency Driven */}
+      {/* CTA SECTION - Growth Driven */}
       <section className="py-24 bg-gradient-to-br from-slate-900 via-brand-950 to-slate-900 relative overflow-hidden border-t border-slate-800">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-brand-500/10 rounded-full blur-[150px] animate-pulse"></div>
-          <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-amber-500/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
 
         <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 mb-8">
-            <Hourglass className="w-4 h-4 text-amber-400 animate-pulse" />
-            <span className="text-sm text-amber-300 font-medium">Every Second Counts</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-500/10 border border-brand-500/20 mb-8">
+            <TrendingUp className="w-4 h-4 text-brand-400" />
+            <span className="text-sm text-brand-300 font-medium">Unlock Your Potential</span>
           </div>
 
           <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-6">
-            Your Idea Is <span className="text-white/40">Fading</span> Right Now
+            Your Business Has <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-indigo-400">Untapped Potential</span>
           </h2>
           <p className="text-xl text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Don't let another brilliant idea slip away. Let's build it together, <span className="text-white font-semibold">starting today</span>.
+            Every gap is an opportunity waiting to be discovered. Let's find yours and <span className="text-white font-semibold">start growing together</span>.
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <button
-              onClick={() => handleNavigate(AppView.CONTACT)}
-              className="group bg-gradient-to-r from-amber-500 to-brand-500 hover:from-amber-400 hover:to-brand-400 text-slate-900 px-10 py-5 rounded-xl font-bold text-lg transition-all shadow-2xl shadow-amber-500/20 flex items-center justify-center"
+              onClick={() => handleNavigate(AppView.GAP_ANALYSIS)}
+              className="group bg-gradient-to-r from-brand-500 to-indigo-500 hover:from-brand-400 hover:to-indigo-400 text-white px-10 py-5 rounded-xl font-bold text-lg transition-all shadow-2xl shadow-brand-500/20 flex items-center justify-center"
             >
-              <Zap className="w-6 h-6 mr-2" />
-              Save Your Idea Now
+              <Target className="w-6 h-6 mr-2" />
+              Get Your Free Gap Analysis
               <ArrowRight className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" />
             </button>
             <button
-              onClick={() => handleNavigate(AppView.EDUCATION)}
+              onClick={() => document.getElementById('partnership-tiers')?.scrollIntoView({ behavior: 'smooth' })}
               className="bg-slate-800/50 hover:bg-slate-800 text-white px-10 py-5 rounded-xl font-bold text-lg transition-all border border-slate-700 flex items-center justify-center"
             >
-              <BookOpen className="w-6 h-6 mr-2" />
-              Learn With Us
+              <Layers className="w-6 h-6 mr-2" />
+              See Partnership Tiers
             </button>
           </div>
 
           <p className="mt-8 text-slate-500 text-sm">
-            Free consultation • No commitment • Response within 24 hours
+            Free gap analysis • No commitment • Response within 24 hours
           </p>
         </div>
       </section>
@@ -1157,6 +1275,16 @@ const App: React.FC = () => {
          <div className="pt-8">
             <ContactSection />
          </div>
+      )}
+
+      {currentView === AppView.GAP_ANALYSIS && (
+        <div className="max-w-7xl mx-auto px-6 py-12 animate-fade-in">
+          {user ? (
+            <BusinessAdvisor onBridge={handleBridgeToEducation} user={user} />
+          ) : (
+            <GapAnalysisIntro onLoginClick={() => setCurrentView(AppView.LOGIN)} />
+          )}
+        </div>
       )}
 
       {user?.role === 'ADMIN' && currentView === AppView.ADMIN && <AdminDashboard />}

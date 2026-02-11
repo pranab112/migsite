@@ -163,7 +163,7 @@ export const SkillForge: React.FC<SkillForgeProps> = ({ onRegister, refreshTrigg
         courseName: plan.topic,
         issueDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
         difficulty: plan.difficulty,
-        signature: 'Mind is Gear Academy'
+        signature: 'Mind is Gear Training'
       };
 
       try {
@@ -220,8 +220,8 @@ export const SkillForge: React.FC<SkillForgeProps> = ({ onRegister, refreshTrigg
           <Loader2 className="w-16 h-16 text-brand-500 animate-spin" />
           <BrainCircuit className="w-6 h-6 text-brand-400 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
         </div>
-        <h3 className="text-2xl font-display font-bold text-white mt-8">Resuming Learning Path</h3>
-        <p className="text-slate-500 mt-2 max-w-xs text-center">Re-establishing neural connections with your curriculum history.</p>
+        <h3 className="text-2xl font-display font-bold text-white mt-8">Loading Training Programs</h3>
+        <p className="text-slate-500 mt-2 max-w-xs text-center">Retrieving your training history and progress.</p>
       </div>
     );
   }
@@ -305,10 +305,10 @@ export const SkillForge: React.FC<SkillForgeProps> = ({ onRegister, refreshTrigg
   return (
     <div className="w-full relative">
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 no-print">
-        <div><span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-2 block">MindGear Intelligence</span><h2 className="text-4xl font-display font-bold text-white">Skill Forge</h2></div>
+        <div><span className="text-brand-400 font-bold tracking-widest text-sm uppercase mb-2 block">Client Development</span><h2 className="text-4xl font-display font-bold text-white">Training Programs</h2></div>
         <div className="flex bg-slate-900 p-1 rounded-lg border border-slate-800 overflow-x-auto">
-           <button onClick={() => setView('NEW')} className={`px-4 py-2 rounded-md text-sm font-bold flex items-center transition-all whitespace-nowrap ${view === 'NEW' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}><Plus className="w-4 h-4 mr-2" />New Path</button>
-           <button onClick={() => setView('HISTORY')} className={`px-4 py-2 rounded-md text-sm font-bold flex items-center transition-all whitespace-nowrap ${view === 'HISTORY' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}><History className="w-4 h-4 mr-2" />Archives</button>
+           <button onClick={() => setView('NEW')} className={`px-4 py-2 rounded-md text-sm font-bold flex items-center transition-all whitespace-nowrap ${view === 'NEW' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}><Plus className="w-4 h-4 mr-2" />New Program</button>
+           <button onClick={() => setView('HISTORY')} className={`px-4 py-2 rounded-md text-sm font-bold flex items-center transition-all whitespace-nowrap ${view === 'HISTORY' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}><History className="w-4 h-4 mr-2" />Past Programs</button>
            <button onClick={() => setView('CERTIFICATES_LIST')} className={`px-4 py-2 rounded-md text-sm font-bold flex items-center transition-all whitespace-nowrap ${view === 'CERTIFICATES_LIST' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}><Medal className="w-4 h-4 mr-2" />Certificates</button>
         </div>
       </div>
@@ -317,12 +317,12 @@ export const SkillForge: React.FC<SkillForgeProps> = ({ onRegister, refreshTrigg
         <>
           <div className="max-w-4xl mx-auto mb-16 no-print">
             <div className="glass-panel p-2 rounded-2xl flex flex-col md:flex-row items-center gap-4">
-              <input type="text" value={topic} onChange={(e) => setTopic(e.target.value)} placeholder="What do you want to master?" className="flex-grow bg-transparent border-none text-white text-lg placeholder-slate-500 focus:ring-0 outline-none px-4 py-4" />
+              <input type="text" value={topic} onChange={(e) => setTopic(e.target.value)} placeholder="What skill does your team need?" className="flex-grow bg-transparent border-none text-white text-lg placeholder-slate-500 focus:ring-0 outline-none px-4 py-4" />
               <select value={level} onChange={(e) => setLevel(e.target.value)} className="bg-slate-900 border border-slate-700 text-white rounded-xl px-4 py-3 outline-none cursor-pointer">
                 <option value="Beginner">Beginner</option><option value="Intermediate">Intermediate</option><option value="Advanced">Advanced</option>
               </select>
               <button onClick={handleCreatePlan} disabled={loading || !topic} className="w-full md:w-auto bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg flex items-center justify-center">
-                {loading ? <Loader2 className="animate-spin w-5 h-5" /> : <span className="flex items-center gap-2"><Sparkles className="w-5 h-5"/> Forge curriculum</span>}
+                {loading ? <Loader2 className="animate-spin w-5 h-5" /> : <span className="flex items-center gap-2"><Sparkles className="w-5 h-5"/> Build Training Program</span>}
               </button>
             </div>
           </div>
@@ -417,11 +417,11 @@ export const SkillForge: React.FC<SkillForgeProps> = ({ onRegister, refreshTrigg
                     <div className="w-20 h-20 bg-brand-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-inner">
                         <Award className="w-10 h-10 text-brand-400" />
                     </div>
-                    <h3 className="text-3xl font-display font-bold text-white mb-3">Grand Mastery Final Graduation</h3>
+                    <h3 className="text-3xl font-display font-bold text-white mb-3">Program Completion Assessment</h3>
                     <p className="text-slate-400 mb-8 max-w-md mx-auto leading-relaxed">
                         {isFinalUnlocked 
-                           ? "You have completed all modules. Prove your mastery in the final comprehensive assessment to earn your certification."
-                           : "Complete all weekly modules above to unlock the Final Graduation Exam and earn your certification."
+                           ? "You have completed all modules. Pass the final assessment to earn your program certification."
+                           : "Complete all weekly modules above to unlock the final assessment and earn your certification."
                         }
                     </p>
                     <button 
@@ -672,12 +672,12 @@ export const SkillForge: React.FC<SkillForgeProps> = ({ onRegister, refreshTrigg
         <div className="animate-fade-in pb-24">
             <div className="flex items-center gap-4 mb-10">
                 <History className="w-8 h-8 text-brand-400" />
-                <h3 className="text-3xl font-display font-bold text-white">Curriculum Vault</h3>
+                <h3 className="text-3xl font-display font-bold text-white">Training History</h3>
             </div>
             {history.length === 0 ? (
                 <div className="text-center py-32 bg-slate-900/30 rounded-[2rem] border-2 border-dashed border-slate-800">
                     <BookOpen className="w-16 h-16 text-slate-700 mx-auto mb-6" />
-                    <p className="text-slate-500 text-lg">Your knowledge archives are empty.</p>
+                    <p className="text-slate-500 text-lg">No training programs created yet.</p>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

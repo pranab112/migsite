@@ -108,7 +108,8 @@ export enum AppView {
   PROJECTS = 'PROJECTS',
   TEAM = 'TEAM',
   ACADEMY = 'ACADEMY',
-  CONTACT = 'CONTACT'
+  CONTACT = 'CONTACT',
+  GAP_ANALYSIS = 'GAP_ANALYSIS'
 }
 
 export type UserRole = 'GUEST' | 'BUSINESS' | 'STUDENT' | 'ADMIN';

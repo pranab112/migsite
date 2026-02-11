@@ -81,10 +81,10 @@ export const BusinessAdvisor: React.FC<BusinessAdvisorProps> = ({ onBridge, user
                <div className="inline-flex items-center justify-center p-2 bg-brand-500/10 rounded-lg">
                   <Briefcase className="w-6 h-6 text-brand-400" />
                </div>
-               <h2 className="text-3xl font-display font-bold text-white">AI Business Architect</h2>
+               <h2 className="text-3xl font-display font-bold text-white">Gap Analysis Engine</h2>
             </div>
             <p className="text-slate-400 max-w-xl text-sm">
-              Strategic analysis engine. Generate new insights or review your enterprise history.
+              Discover hidden gaps in your business. Generate new analyses or review past results.
             </p>
           </div>
 
@@ -94,14 +94,14 @@ export const BusinessAdvisor: React.FC<BusinessAdvisorProps> = ({ onBridge, user
                 className={`px-4 py-2 rounded-md text-sm font-bold flex items-center transition-all ${view === 'NEW' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}
              >
                 <Plus className="w-4 h-4 mr-2" />
-                New Strategy
+                New Analysis
              </button>
              <button 
                 onClick={() => setView('HISTORY')}
                 className={`px-4 py-2 rounded-md text-sm font-bold flex items-center transition-all ${view === 'HISTORY' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}
              >
                 <History className="w-4 h-4 mr-2" />
-                History ({history.length})
+                Past Analyses ({history.length})
              </button>
           </div>
         </div>
@@ -144,7 +144,7 @@ export const BusinessAdvisor: React.FC<BusinessAdvisorProps> = ({ onBridge, user
                     </>
                   ) : (
                     <>
-                      <span>Generate Strategy</span>
+                      <span>Analyze Gaps</span>
                       <ArrowRight className="w-5 h-5" />
                     </>
                   )}
@@ -168,7 +168,7 @@ export const BusinessAdvisor: React.FC<BusinessAdvisorProps> = ({ onBridge, user
                       <div className="w-3 h-3 bg-brand-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
                       <div className="w-3 h-3 bg-brand-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                    </div>
-                   <p className="text-brand-400 font-medium">Constructing neural strategies...</p>
+                   <p className="text-brand-400 font-medium">Analyzing your business gaps...</p>
                 </div>
               )}
 
@@ -212,7 +212,7 @@ export const BusinessAdvisor: React.FC<BusinessAdvisorProps> = ({ onBridge, user
                                 title="Generate Training Course for this Strategy"
                             >
                                 <GraduationCap className="w-3 h-3 mr-2" />
-                                Train Team
+                                Build Training Program
                             </button>
                         )}
                       </div>
@@ -228,7 +228,7 @@ export const BusinessAdvisor: React.FC<BusinessAdvisorProps> = ({ onBridge, user
              {history.length === 0 ? (
                <div className="text-center py-24 text-slate-500">
                  <History className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                 <p>No saved strategies found in database.</p>
+                 <p>No saved analyses found.</p>
                </div>
              ) : (
                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -250,7 +250,7 @@ export const BusinessAdvisor: React.FC<BusinessAdvisorProps> = ({ onBridge, user
                        {item.description}
                      </p>
                      <div className="flex items-center text-brand-400 text-sm font-bold group-hover:translate-x-1 transition-transform">
-                       View Strategies <ChevronRight className="w-4 h-4 ml-1" />
+                       View Analysis <ChevronRight className="w-4 h-4 ml-1" />
                      </div>
                    </button>
                  ))}

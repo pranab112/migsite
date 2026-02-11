@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { AppView, UserProfile } from '../types';
-import { Menu, X, Brain, Rocket, GraduationCap, LogIn, LogOut, Briefcase, User, Building2, School, Users, Mail, BookOpen } from 'lucide-react';
+import { Menu, X, Brain, Rocket, GraduationCap, LogIn, LogOut, Briefcase, User, Building2, School, Users, Mail, BookOpen, Search } from 'lucide-react';
 
 interface LayoutProps {
   currentView: AppView;
@@ -17,40 +17,40 @@ export const Layout: React.FC<LayoutProps> = ({ currentView, setView, user, onLo
 
   // Define links
   const allLinks = [
-    { 
-      id: AppView.HOME, 
-      label: 'Home', 
+    {
+      id: AppView.HOME,
+      label: 'Home',
       icon: <Brain className="w-4 h-4" />,
       allowed: ['GUEST', 'BUSINESS', 'STUDENT']
     },
-    { 
-      id: AppView.PROJECTS, 
-      label: 'Systems', 
+    {
+      id: AppView.PROJECTS,
+      label: 'Case Studies',
       icon: <Briefcase className="w-4 h-4" />,
       allowed: ['GUEST', 'BUSINESS', 'STUDENT']
     },
-    { 
-      id: AppView.EDUCATION, 
-      label: 'Skill Forge', 
-      icon: <GraduationCap className="w-4 h-4" />,
-      allowed: ['GUEST', 'STUDENT', 'BUSINESS']
-    },
-    { 
-      id: AppView.ACADEMY, 
-      label: 'Academy', 
+    {
+      id: AppView.ACADEMY,
+      label: 'Training',
       icon: <BookOpen className="w-4 h-4" />,
       allowed: ['GUEST', 'STUDENT', 'BUSINESS']
     },
-    { 
-      id: AppView.TEAM, 
-      label: 'Team', 
+    {
+      id: AppView.TEAM,
+      label: 'Team',
       icon: <Users className="w-4 h-4" />,
       allowed: ['GUEST', 'STUDENT', 'BUSINESS']
     },
-    { 
-      id: AppView.CONTACT, 
-      label: 'Contact', 
+    {
+      id: AppView.CONTACT,
+      label: 'Partner With Us',
       icon: <Mail className="w-4 h-4" />,
+      allowed: ['GUEST', 'STUDENT', 'BUSINESS']
+    },
+    {
+      id: AppView.GAP_ANALYSIS,
+      label: 'Free Analysis',
+      icon: <Search className="w-4 h-4" />,
       allowed: ['GUEST', 'STUDENT', 'BUSINESS']
     },
   ];
@@ -76,7 +76,7 @@ export const Layout: React.FC<LayoutProps> = ({ currentView, setView, user, onLo
                   MIND IS <span className="text-brand-400">GEAR</span>
                 </span>
                 <span className="text-[10px] text-slate-500 font-medium tracking-widest uppercase mt-1">
-                  System v2.0
+                  Growth Partners
                 </span>
               </div>
             </button>
@@ -237,22 +237,22 @@ export const Layout: React.FC<LayoutProps> = ({ currentView, setView, user, onLo
               <span className="font-display font-bold text-lg text-white">Mind is Gear</span>
             </div>
             <p className="text-slate-400 text-sm max-w-sm">
-              Connecting human intellect with artificial intelligence to build stronger businesses and smarter people.
+              Your long-term growth partner. We find your gaps, build solutions, and grow with you in the global marketplace.
             </p>
           </div>
           <div>
-            <h4 className="font-semibold text-white mb-4">Solutions</h4>
+            <h4 className="font-semibold text-white mb-4">Partnership</h4>
             <ul className="space-y-2 text-sm text-slate-400">
-              <li onClick={() => setView(AppView.PROJECTS)} className="hover:text-brand-400 cursor-pointer">Systems</li>
-              <li onClick={() => setView(AppView.CONTACT)} className="hover:text-brand-400 cursor-pointer">Contact Us</li>
+              <li onClick={() => setView(AppView.PROJECTS)} className="hover:text-brand-400 cursor-pointer">Case Studies</li>
+              <li onClick={() => setView(AppView.CONTACT)} className="hover:text-brand-400 cursor-pointer">Partner With Us</li>
+              <li onClick={() => setView(AppView.GAP_ANALYSIS)} className="hover:text-brand-400 cursor-pointer">Free Analysis</li>
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold text-white mb-4">Academy</h4>
+            <h4 className="font-semibold text-white mb-4">Resources</h4>
             <ul className="space-y-2 text-sm text-slate-400">
-              <li onClick={() => setView(AppView.EDUCATION)} className="hover:text-brand-400 cursor-pointer">Skill Forge</li>
-              <li onClick={() => setView(AppView.ACADEMY)} className="hover:text-brand-400 cursor-pointer">Courses</li>
-              <li onClick={() => setView(AppView.TEAM)} className="hover:text-brand-400 cursor-pointer">Mentors</li>
+              <li onClick={() => setView(AppView.ACADEMY)} className="hover:text-brand-400 cursor-pointer">Training Programs</li>
+              <li onClick={() => setView(AppView.TEAM)} className="hover:text-brand-400 cursor-pointer">Our Team</li>
             </ul>
           </div>
         </div>
